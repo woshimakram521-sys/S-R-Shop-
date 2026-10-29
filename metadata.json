@@ -1,0 +1,8 @@
+{
+  "name": "Nova Shop - Bangladeshi E-Commerce & Reseller Platform",
+  "description": "Premium Bengali-first e-commerce and reseller platform featuring Claymorphism design, guest checkout, bKash/Nagad verification, reseller advance delivery payment rule, and admin management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

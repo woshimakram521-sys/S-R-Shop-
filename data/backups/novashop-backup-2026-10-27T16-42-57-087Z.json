@@ -1,0 +1,908 @@
+{
+  "settings": {
+    "shopName": "Nova Shop",
+    "banglaShopName": "নোভা শপ",
+    "tagline": "Premium Bangladeshi E-Commerce & Reseller Hub",
+    "banglaTagline": "বাংলাদেশের সেরা অনলাইন শপিং ও বিশ্বস্ত রিসেলার প্ল্যাটফর্ম",
+    "logoUrl": "/icon.svg",
+    "contactPhone": "+880 1712-345678",
+    "helplinePhone": "09612-345678",
+    "contactEmail": "support@novashop.bd",
+    "address": "House #42, Road #11, Sector #4, Uttara, Dhaka-1230, Bangladesh",
+    "tradeLicense": "TRAD/DNCC/029412/2026",
+    "currencySymbol": "৳",
+    "minResellerAdvance": 50,
+    "resellerRegistrationFee": 200,
+    "autoApproveResellers": false,
+    "bkashNumber": "01712345678",
+    "bkashType": "মার্চেন্ট অ্যাকাউন্ট (Make Payment)",
+    "bkashInstructions": "বিকাশ অ্যাপে গিয়ে Payment অপশন বেছে নিন, আমাদের মার্চেন্ট নম্বর দিন এবং রেফারেন্সে আপনার অর্ডার আইডি লিখুন।",
+    "nagadNumber": "01812345678",
+    "nagadType": "পার্সোনাল অ্যাকাউন্ট (Send Money)",
+    "nagadInstructions": "নগদ অ্যাপে অথবা *167# ডায়াল করে Send Money অপশনে যান, নগদ পার্সোনাল নম্বর দিন এবং রেফারেন্সে অর্ডার আইডি দিন।",
+    "rocketNumber": "01912345678-9",
+    "rocketType": "পার্সোনাল অ্যাকাউন্ট",
+    "smtpHost": "smtp.gmail.com",
+    "smtpPort": 587,
+    "smtpUser": "orders@novashop.bd",
+    "smtpPass": "",
+    "smtpFrom": "Nova Shop <orders@novashop.bd>",
+    "emailNotificationsEnabled": false,
+    "globalResellerMaxMarkupPercent": 60,
+    "referralEnabled": true,
+    "referralDiscountMode": "half",
+    "referralDiscountValue": 100,
+    "referralCommissionAmount": 50,
+    "minWithdrawalAmount": 500,
+    "emailRecipients": [
+      "support@novashop.bd"
+    ],
+    "emailNotificationEvents": {
+      "newShopOrder": true,
+      "newResellerOrder": true,
+      "resellerRegistration": true,
+      "registrationPaymentSubmitted": true,
+      "advancePaymentSubmitted": true,
+      "advancePaymentVerified": true,
+      "orderStatusChanged": true,
+      "commissionApproved": true,
+      "withdrawalRequested": true,
+      "withdrawalPaid": true
+    }
+  },
+  "products": [
+    {
+      "id": "prod-101",
+      "sku": "M-PNJ-01",
+      "name": "Royal Semi-fitted Silk Panjabi with Embroidery",
+      "banglaName": "রয়্যাল প্রিমিয়াম সেমি-ফিটেড সিল্ক পাঞ্জাবি",
+      "category": "mens-fashion",
+      "shopPrice": 1450,
+      "resellerPrice": 1100,
+      "regularPrice": 2200,
+      "stock": 39,
+      "variants": [
+        {
+          "id": "v1",
+          "name": "Size",
+          "options": [
+            "M (40)",
+            "L (42)",
+            "XL (44)"
+          ]
+        },
+        {
+          "id": "v2",
+          "name": "Color",
+          "options": [
+            "Royal Blue",
+            "Deep Maroon",
+            "Emerald Green"
+          ]
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80"
+      ],
+      "description": "Handcrafted luxury semi-fitted panjabi made with fine quality silk cotton blend. Features intricate computer embroidery along neckline and chest plate.",
+      "banglaDescription": "১০০% প্রিমিয়াম কোয়ালিটির সিল্ক কটন কাপড়ে তৈরি আরামদায়ক ও ক্লাসি ডিজাইনের পাঞ্জাবি। কলার ও বুকে আকর্ষণীয় সূক্ষ্ম এমব্রয়ডারি কাজ। যেকোনো উৎসব বা অনুষ্ঠানের জন্য পারফেক্ট।",
+      "isFeatured": true,
+      "isBestseller": true,
+      "isPublished": true,
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "resellerMaxPrice": 1650
+    },
+    {
+      "id": "prod-102",
+      "sku": "W-JMD-02",
+      "name": "Exclusive Handwoven Dhakai Jamdani Saree (84 Count)",
+      "banglaName": "এক্সক্লুসিভ খাঁটি ঢাকাই জামদানি শাড়ি (৮৪ কাউন্ট)",
+      "category": "womens-collection",
+      "shopPrice": 3200,
+      "resellerPrice": 2550,
+      "regularPrice": 4800,
+      "stock": 22,
+      "variants": [
+        {
+          "id": "v1",
+          "name": "Color",
+          "options": [
+            "Crimson Red & Gold",
+            "Black & Silver",
+            "Pastel Pink"
+          ]
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=800&auto=format&fit=crop&q=80"
+      ],
+      "description": "Authentic 84-count handloom Dhakai Jamdani saree with fine floral motifs. Comes with running blouse piece.",
+      "banglaDescription": "রূপগঞ্জের ঐতিহ্যবাহী তাঁতিদের হাতে বোনা ৮৪ কাউন্টের নিখুঁত ঢাকাই জামদানি। সফট সুতার বুনন যা পরতে অত্যন্ত আরামদায়ক ও আভিজাত্যপূর্ণ। ব্লাউজ পিস অন্তর্ভুক্ত।",
+      "isFeatured": true,
+      "isBestseller": true,
+      "isPublished": true,
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "resellerMaxPrice": 3825
+    },
+    {
+      "id": "prod-103",
+      "sku": "G-T900-03",
+      "name": "T900 Ultra 2 Bluetooth Calling Smartwatch with AMOLED Display",
+      "banglaName": "টি৯০০ আল্ট্রা ২ ব্লুটুথ কলিং স্মার্টওয়াচ",
+      "category": "gadgets",
+      "shopPrice": 1250,
+      "resellerPrice": 890,
+      "regularPrice": 1950,
+      "stock": 80,
+      "variants": [
+        {
+          "id": "v1",
+          "name": "Strap Color",
+          "options": [
+            "Orange Ocean",
+            "Black Titanium",
+            "Silver Grey"
+          ]
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80"
+      ],
+      "description": "Full HD touch screen smartwatch with wireless magnetic charging, waterproof casing, heart rate monitor, sleep tracking, and HD Bluetooth calling.",
+      "banglaDescription": "ফুল স্ক্রিন টাচ ডিসপ্লে, সরাসরি কল রিসিভ ও ডায়াল করার সুবিধা, হার্টরেট ও অক্সিজেন সেন্সর, শক্তিশালী ব্যাটারি লাইফ ও ওয়্যারলেস চার্জিং সাপোর্ট।",
+      "isFeatured": true,
+      "isBestseller": true,
+      "isPublished": true,
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "resellerMaxPrice": 1335
+    },
+    {
+      "id": "prod-104",
+      "sku": "O-HNY-04",
+      "name": "Sundarbans Pure Natural Wild Raw Honey 1000g",
+      "banglaName": "খাঁটি সুন্দরবনের প্রাকৃতিক বুনো মধু (১ কেজি)",
+      "category": "organic-food",
+      "shopPrice": 1150,
+      "resellerPrice": 850,
+      "regularPrice": 1500,
+      "stock": 65,
+      "variants": [
+        {
+          "id": "v1",
+          "name": "Weight",
+          "options": [
+            "1 kg Glass Jar",
+            "500g Jar"
+          ]
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800&auto=format&fit=crop&q=80"
+      ],
+      "description": "100% pure raw honey directly harvested from wild bees in the deep Sundarban mangrove forest. Free of added sugar or processing.",
+      "banglaDescription": "সুন্দরবনের গভীর জঙ্গল থেকে মোয়ালদের মাধ্যমে সংগ্রহকৃত ১০০% প্রাকৃতিক বুনো মধু। কোনো প্রকার চিনি, প্রিজারভেটিভ বা কেমিক্যাল মুক্ত। পরীক্ষিত ল্যাব কোয়ালিটি।",
+      "isFeatured": false,
+      "isBestseller": true,
+      "isPublished": true,
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "resellerMaxPrice": 1275
+    },
+    {
+      "id": "prod-105",
+      "sku": "O-OIL-05",
+      "name": "Cold Pressed Wood-Ghani Pure Mustard Oil 1 Litre",
+      "banglaName": "কাঠের ঘানিতে ভাঙা খাঁটি সরিষার তেল (১ লিটার)",
+      "category": "organic-food",
+      "shopPrice": 380,
+      "resellerPrice": 280,
+      "regularPrice": 480,
+      "stock": 120,
+      "variants": [
+        {
+          "id": "v1",
+          "name": "Volume",
+          "options": [
+            "1 Litre Bottle",
+            "2 Litre Can"
+          ]
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=800&auto=format&fit=crop&q=80"
+      ],
+      "description": "First cold-pressed raw yellow and brown mustard seed oil crushed in traditional wood mills (Ghani) at low temperatures.",
+      "banglaDescription": "দেশি উন্নত জাতের হলুদ ও কালো সরিষা থেকে কাঠের ঘানিতে কম তাপে ভাঙা খাঁটি ঝাঁঝালো সরিষার তেল। রান্নার স্বাদ বৃদ্ধি ও সুস্থ হার্টের জন্য অনন্য।",
+      "isFeatured": false,
+      "isBestseller": false,
+      "isPublished": true,
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "resellerMaxPrice": 420
+    },
+    {
+      "id": "prod-106",
+      "sku": "L-WLT-06",
+      "name": "100% Genuine Full-grain Bangladeshi Cowhide Leather Wallet",
+      "banglaName": "১০০% খাঁটি গরুর চামড়ার এক্সক্লুসিভ মানিব্যাগ / ওয়ালেট",
+      "category": "leather-goods",
+      "shopPrice": 790,
+      "resellerPrice": 520,
+      "regularPrice": 1350,
+      "stock": 90,
+      "variants": [
+        {
+          "id": "v1",
+          "name": "Color",
+          "options": [
+            "Vintage Brown",
+            "Classic Black",
+            "Tan Camel"
+          ]
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80"
+      ],
+      "description": "Top grain cow leather bi-fold wallet featuring RFID blocking security, 8 card slots, and dual currency pockets. Guaranteed durability.",
+      "banglaDescription": "হাজারীবাগের প্রিমিয়াম ফিনিশড চামড়ায় তৈরি টেকসই ওয়ালেট। ৮টি কার্ড স্লট, ২টি ক্যাশ পকেট ও আরএফআইডি প্রটেকশন। ৫ বছরের চামড়া ওয়ারেন্টি।",
+      "isFeatured": true,
+      "isBestseller": false,
+      "isPublished": true,
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "resellerMaxPrice": 780
+    },
+    {
+      "id": "prod-107",
+      "sku": "G-EBD-07",
+      "name": "ANC Wireless Bluetooth Earbuds with Environmental Noise Cancellation",
+      "banglaName": "নয়েজ ক্যান্সেলেশন ওয়্যারলেস ব্লুটুথ ইয়ারবাডস",
+      "category": "gadgets",
+      "shopPrice": 1100,
+      "resellerPrice": 780,
+      "regularPrice": 1750,
+      "stock": 50,
+      "variants": [
+        {
+          "id": "v1",
+          "name": "Color",
+          "options": [
+            "Matte Black",
+            "Pearl White"
+          ]
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&auto=format&fit=crop&q=80"
+      ],
+      "description": "Super bass wireless earbuds with ENC dual microphones for crystal clear calling, 36 hours total battery playback, and Type-C fast charge.",
+      "banglaDescription": "শক্তিশালী ডিপ বাস, ক্রিস্টাল ক্লিয়ার কলিং নয়েজ ক্যান্সেলেশন এবং টাইপ-সি ফাস্ট চার্জিং। গেমিং ও মিউজিকের জন্য দুর্দান্ত সাউন্ড কোয়ালিটি।",
+      "isFeatured": true,
+      "isBestseller": true,
+      "isPublished": true,
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "resellerMaxPrice": 1170
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Men's Fashion",
+      "banglaName": "মেনস ফ্যাশন",
+      "slug": "mens-fashion",
+      "iconName": "Shirt",
+      "imageUrl": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=600&auto=format&fit=crop&q=80",
+      "order": 1
+    },
+    {
+      "id": "cat-2",
+      "name": "Women's Collection",
+      "banglaName": "লেডিস কালেকশন",
+      "slug": "womens-collection",
+      "iconName": "Sparkles",
+      "imageUrl": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&auto=format&fit=crop&q=80",
+      "order": 2
+    },
+    {
+      "id": "cat-3",
+      "name": "Smart Gadgets & Electronics",
+      "banglaName": "স্মার্ট গ্যাজেটস",
+      "slug": "gadgets",
+      "iconName": "Watch",
+      "imageUrl": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=80",
+      "order": 3
+    },
+    {
+      "id": "cat-4",
+      "name": "Pure Organic Foods",
+      "banglaName": "অর্গানিক খাবার ও মধু",
+      "slug": "organic-food",
+      "iconName": "Apple",
+      "imageUrl": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&auto=format&fit=crop&q=80",
+      "order": 4
+    },
+    {
+      "id": "cat-5",
+      "name": "Leather Goods & Accessories",
+      "banglaName": "চামড়ার পণ্য ও ওয়ালেট",
+      "slug": "leather-goods",
+      "iconName": "Briefcase",
+      "imageUrl": "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&auto=format&fit=crop&q=80",
+      "order": 5
+    }
+  ],
+  "banners": [
+    {
+      "id": "banner-1",
+      "title": "Grand Bangladeshi Festive Collection",
+      "banglaTitle": "প্রিমিয়াম কালেকশনে বিশেষ ছাড় ও পাইকারি অফার",
+      "subtitle": "Original high-quality items with guaranteed authentic quality and fast nationwide home delivery.",
+      "banglaSubtitle": "সরাসরি প্রস্তুতকারক ও পাইকারদের থেকে সেরা মূল্যে কিনুন। ঘরে বসেই ক্যাশ অন ডেলিভারি!",
+      "tag": "হট সেল ২০২৬",
+      "imageUrl": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&auto=format&fit=crop&q=80",
+      "buttonText": "Shop Now",
+      "banglaButtonText": "অর্ডার করুন এখনই",
+      "linkUrl": "#products",
+      "backgroundColor": "from-teal-800 to-emerald-950",
+      "isActive": true,
+      "order": 1
+    },
+    {
+      "id": "banner-2",
+      "title": "Become a Nova Shop Verified Reseller",
+      "banglaTitle": "জিরো ইনভেস্টমেন্টে শুরু করুন আপনার রিসেলিং বিজনেস",
+      "subtitle": "Earn ৳15,000 - ৳50,000 monthly by selling our verified products at your own customized price.",
+      "banglaSubtitle": "পাইকারি রেটে প্রডাক্ট নিন, নিজের দামে বিক্রি করুন আর প্রতি অর্ডারে বুঝে নিন নিশ্চিত প্রফিট!",
+      "tag": "রিসেলার জোন",
+      "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80",
+      "buttonText": "Join Reseller",
+      "banglaButtonText": "রিসেলার হতে আবেদন করুন",
+      "linkUrl": "#reseller",
+      "backgroundColor": "from-amber-700 to-orange-950",
+      "isActive": true,
+      "order": 2
+    }
+  ],
+  "deliveryZones": [
+    {
+      "id": "zone-1",
+      "name": "Inside Dhaka City",
+      "banglaName": "ঢাকা সিটির ভেতরে",
+      "charge": 70,
+      "estimatedDays": "1-2 Days",
+      "banglaEstimatedDays": "১-২ কার্যদিবস",
+      "isActive": true
+    },
+    {
+      "id": "zone-2",
+      "name": "Dhaka Suburbs (Savar, Gazipur, Narayanganj)",
+      "banglaName": "ঢাকা উপশহর (সাভার, গাজীপুর, নারায়ণগঞ্জ)",
+      "charge": 100,
+      "estimatedDays": "2-3 Days",
+      "banglaEstimatedDays": "২-৩ কার্যদিবস",
+      "isActive": true
+    },
+    {
+      "id": "zone-3",
+      "name": "Outside Dhaka (All Bangladesh)",
+      "banglaName": "ঢাকার বাইরে সমগ্র বাংলাদেশ",
+      "charge": 130,
+      "estimatedDays": "3-5 Days",
+      "banglaEstimatedDays": "৩-৫ কার্যদিবস",
+      "isActive": true
+    }
+  ],
+  "orders": [
+    {
+      "orderType": "reseller_order",
+      "resellerId": "usr-1793119377075-j8fp",
+      "resellerName": "Test Reseller Mart",
+      "resellerPhone": "01899999999",
+      "customerName": "Customer of Reseller",
+      "customerPhone": "01988887766",
+      "customerAddress": "Chittagong Port Area",
+      "deliveryZoneId": "zone-3",
+      "deliveryZoneName": "Outside Dhaka",
+      "deliveryCharge": 130,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 1,
+          "unitPrice": 1650,
+          "costPrice": 1100,
+          "subtotal": 1650
+        }
+      ],
+      "subtotal": 1650,
+      "totalAmount": 1780,
+      "resellerSellingPriceTotal": 1650,
+      "resellerProfit": 550,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "resellerAdvancePayment": {
+        "requiredAmount": 50,
+        "paidAmount": 50,
+        "method": "bkash",
+        "txId": "BKASHADV_1793119377079",
+        "status": "VERIFIED",
+        "verifiedAt": "2026-10-27T16:42:57.080Z",
+        "verifiedBy": "admin",
+        "adminNotes": "Statement verified"
+      },
+      "orderStatus": "SHIPPED",
+      "id": "NS-2610-2673",
+      "createdAt": "2026-10-27T16:42:57.079Z",
+      "updatedAt": "2026-10-27T16:42:57.081Z"
+    },
+    {
+      "orderType": "direct_customer",
+      "customerName": "Rahim Uddin",
+      "customerPhone": "01711112233",
+      "customerAddress": "House 5, Road 2, Dhanmondi, Dhaka",
+      "deliveryZoneId": "zone-1",
+      "deliveryZoneName": "Inside Dhaka",
+      "deliveryCharge": 70,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 2,
+          "unitPrice": 1450,
+          "costPrice": 1100,
+          "subtotal": 2900
+        }
+      ],
+      "subtotal": 2900,
+      "totalAmount": 2970,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "orderStatus": "PENDING",
+      "id": "NS-2610-4238",
+      "createdAt": "2026-10-27T16:42:57.078Z",
+      "updatedAt": "2026-10-27T16:42:57.078Z"
+    },
+    {
+      "orderType": "reseller_order",
+      "resellerId": "usr-1793113355137-jscv",
+      "resellerName": "Test Reseller Mart",
+      "resellerPhone": "01899999999",
+      "customerName": "Customer of Reseller",
+      "customerPhone": "01988887766",
+      "customerAddress": "Chittagong Port Area",
+      "deliveryZoneId": "zone-3",
+      "deliveryZoneName": "Outside Dhaka",
+      "deliveryCharge": 130,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 1,
+          "unitPrice": 1650,
+          "costPrice": 1100,
+          "subtotal": 1650
+        }
+      ],
+      "subtotal": 1650,
+      "totalAmount": 1780,
+      "resellerSellingPriceTotal": 1650,
+      "resellerProfit": 550,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "resellerAdvancePayment": {
+        "requiredAmount": 50,
+        "paidAmount": 50,
+        "method": "bkash",
+        "txId": "BKASHADV_1793113355140",
+        "status": "VERIFIED",
+        "verifiedAt": "2026-10-27T15:02:35.141Z",
+        "verifiedBy": "admin",
+        "adminNotes": "Statement verified"
+      },
+      "orderStatus": "SHIPPED",
+      "id": "NS-261027-257",
+      "createdAt": "2026-10-27T15:02:35.140Z",
+      "updatedAt": "2026-10-27T15:02:35.142Z"
+    },
+    {
+      "orderType": "direct_customer",
+      "customerName": "Rahim Uddin",
+      "customerPhone": "01711112233",
+      "customerAddress": "House 5, Road 2, Dhanmondi, Dhaka",
+      "deliveryZoneId": "zone-1",
+      "deliveryZoneName": "Inside Dhaka",
+      "deliveryCharge": 70,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 2,
+          "unitPrice": 1450,
+          "costPrice": 1100,
+          "subtotal": 2900
+        }
+      ],
+      "subtotal": 2900,
+      "totalAmount": 2970,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "orderStatus": "PENDING",
+      "id": "NS-261027-860",
+      "createdAt": "2026-10-27T15:02:35.139Z",
+      "updatedAt": "2026-10-27T15:02:35.139Z"
+    },
+    {
+      "id": "NS-2610-101",
+      "orderType": "direct_customer",
+      "customerName": "Mahmudul Hasan",
+      "customerPhone": "01719876543",
+      "customerAddress": "House 14, Road 5, Block C, Banani, Dhaka",
+      "deliveryZoneId": "zone-1",
+      "deliveryZoneName": "Inside Dhaka City",
+      "deliveryCharge": 70,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productBanglaName": "রয়্যাল প্রিমিয়াম সেমি-ফিটেড সিল্ক পাঞ্জাবি",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "selectedVariants": {
+            "Size": "L (42)",
+            "Color": "Royal Blue"
+          },
+          "quantity": 1,
+          "unitPrice": 1450,
+          "costPrice": 1100,
+          "subtotal": 1450
+        }
+      ],
+      "subtotal": 1450,
+      "totalAmount": 1520,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "orderStatus": "PROCESSING",
+      "createdAt": "2026-10-27T10:02:34.925Z",
+      "updatedAt": "2026-10-27T15:02:34.925Z"
+    },
+    {
+      "id": "NS-2610-102",
+      "orderType": "reseller_order",
+      "resellerId": "usr-reseller-1",
+      "resellerName": "Tanvir Fashion Hub",
+      "resellerPhone": "01811223344",
+      "customerName": "Nasrin Sultana",
+      "customerPhone": "01912987654",
+      "customerAddress": "Miah Bari Road, Chashara, Narayanganj",
+      "deliveryZoneId": "zone-2",
+      "deliveryZoneName": "Dhaka Suburbs (Savar, Gazipur, Narayanganj)",
+      "deliveryCharge": 100,
+      "items": [
+        {
+          "productId": "prod-102",
+          "productName": "Exclusive Handwoven Dhakai Jamdani Saree (84 Count)",
+          "productBanglaName": "এক্সক্লুসিভ খাঁটি ঢাকাই জামদানি শাড়ি (৮৪ কাউন্ট)",
+          "productImage": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&auto=format&fit=crop&q=80",
+          "selectedVariants": {
+            "Color": "Crimson Red & Gold"
+          },
+          "quantity": 1,
+          "unitPrice": 3500,
+          "costPrice": 2550,
+          "subtotal": 3500
+        }
+      ],
+      "subtotal": 3500,
+      "totalAmount": 3600,
+      "resellerSellingPriceTotal": 3500,
+      "resellerProfit": 950,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "resellerAdvancePayment": {
+        "requiredAmount": 50,
+        "paidAmount": 50,
+        "method": "bkash",
+        "senderPhone": "01811223344",
+        "txId": "BKASHADV847291",
+        "status": "PENDING_VERIFICATION"
+      },
+      "orderStatus": "PENDING",
+      "createdAt": "2026-10-27T13:02:34.925Z",
+      "updatedAt": "2026-10-27T15:02:34.925Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr-admin-1",
+      "name": "Nova Shop Super Admin",
+      "email": "admin@novashop.com",
+      "phone": "01700000000",
+      "role": "admin",
+      "status": "active",
+      "passwordHash": "e22367c35d85e68fa7fd2392ea5539a2bbe76732a176a61716ca5b353a95c6e46917ed3eb36dbec125892b530f997f739c46ef1c40320825ed48d6977f79253b",
+      "salt": "dd800b7a84ee41f7cdf4c062989978ec",
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "referralCode": "NOVA-1115",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 0,
+      "regPaymentStatus": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "usr-reseller-1",
+      "name": "Tanvir Hossain",
+      "email": "reseller@novashop.com",
+      "phone": "01811223344",
+      "role": "reseller",
+      "status": "active",
+      "businessName": "Tanvir Fashion Hub (ঢাকা ড্রিম বাজার)",
+      "registrationFeePaid": true,
+      "registrationTxId": "BKASH9823412",
+      "registrationMethod": "bkash",
+      "payoutAccount": {
+        "method": "bkash",
+        "accountNumber": "01811223344",
+        "accountHolderName": "Tanvir Hossain"
+      },
+      "totalEarnings": 3450,
+      "withdrawnEarnings": 1500,
+      "passwordHash": "656956d58013455b043eab4fa6a9e04f73cea5dc5ae35c1584cc5a974c1a2b33c95a04dc333053b575f24eaad24764dc1ec06e494e44fc368e9a0e36decf91e7",
+      "salt": "a60150ef5e4c3bdd549b382b1fb1530f",
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "referralCode": "NOVA-4211",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 1500,
+      "regPaymentStatus": "APPROVED"
+    },
+    {
+      "id": "usr-reseller-2",
+      "name": "Shakil Ahmed",
+      "email": "pending_reseller@novashop.com",
+      "phone": "01922334455",
+      "role": "reseller",
+      "status": "pending_approval",
+      "businessName": "Shakil Online Mart",
+      "registrationFeePaid": true,
+      "registrationTxId": "NAGAD5481920",
+      "registrationMethod": "nagad",
+      "passwordHash": "656956d58013455b043eab4fa6a9e04f73cea5dc5ae35c1584cc5a974c1a2b33c95a04dc333053b575f24eaad24764dc1ec06e494e44fc368e9a0e36decf91e7",
+      "salt": "a60150ef5e4c3bdd549b382b1fb1530f",
+      "createdAt": "2026-10-27T15:02:34.924Z",
+      "referralCode": "NOVA-3292",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 0,
+      "regPaymentStatus": "APPROVED"
+    },
+    {
+      "id": "usr-1793113355137-jscv",
+      "name": "Test Reseller",
+      "email": "test_reseller_1793113355086@test.com",
+      "phone": "01899999999",
+      "role": "reseller",
+      "status": "active",
+      "businessName": "Test Reseller Mart",
+      "registrationFeePaid": false,
+      "registrationTxId": "BKASH999999",
+      "registrationMethod": "bkash",
+      "totalEarnings": 0,
+      "withdrawnEarnings": 0,
+      "createdAt": "2026-10-27T15:02:35.137Z",
+      "passwordHash": "845436407e8be3a00f3d7ced834faded87e60f0a0548066393136969e3daca698ef31169813dbd4acbb0412d2b8ab75643a7a0be739e2bfbe9c643f787dee8c8",
+      "salt": "1911b79c580f327e48448ba292f7b686",
+      "referralCode": "NOVA-8484",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 0,
+      "regPaymentStatus": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "usr-1793119377075-j8fp",
+      "name": "Test Reseller",
+      "email": "test_reseller_1793119377025@test.com",
+      "phone": "01899999999",
+      "role": "reseller",
+      "status": "active",
+      "businessName": "Test Reseller Mart",
+      "registrationFeePaid": false,
+      "registrationTxId": "BKASH999999",
+      "registrationMethod": "bkash",
+      "referralCode": "NOVA-8472",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 0,
+      "createdAt": "2026-10-27T16:42:57.075Z",
+      "passwordHash": "c4accbbb81b959fcb2071fd40ddb921a62645f2a20a3e4332a536ec2f7c8c5a7457bb7586832cb91b1dd120e4ddf8e8ff089b036e743418af70caf1ef4572c17",
+      "salt": "40c6ce62d6afb7cb0f4e6812b4fcc3bd"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "aud-1793119377086-eitu",
+      "action": "DATABASE_BACKUP",
+      "details": "Database backup created: novashop-backup-2026-10-27T16-42-57-086Z.json",
+      "timestamp": "2026-10-27T16:42:57.086Z"
+    },
+    {
+      "id": "aud-1793119377085-mepb",
+      "userRole": "admin",
+      "action": "DELETE_PRODUCT",
+      "details": "Product deleted: Test CSV Item (TEST-CSV-100)",
+      "timestamp": "2026-10-27T16:42:57.085Z"
+    },
+    {
+      "id": "aud-1793119377084-1wnq",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "IMPORT_CSV",
+      "details": "CSV import completed: 1 created, 0 updated",
+      "timestamp": "2026-10-27T16:42:57.084Z"
+    },
+    {
+      "id": "aud-1793119377081-vw74",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-2673 status changed to SHIPPED",
+      "timestamp": "2026-10-27T16:42:57.081Z"
+    },
+    {
+      "id": "aud-1793119377080-afr1",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "VERIFY_ADVANCE_PAYMENT",
+      "details": "Verified advance payment for order NS-2610-2673. Notes: Statement verified",
+      "timestamp": "2026-10-27T16:42:57.080Z"
+    },
+    {
+      "id": "aud-1793119377079-xqeg",
+      "action": "CREATE_ORDER",
+      "details": "New reseller_order placed: NS-2610-2673 by Customer of Reseller (Total: ৳1780)",
+      "timestamp": "2026-10-27T16:42:57.079Z"
+    },
+    {
+      "id": "aud-1793119377078-80dq",
+      "action": "CREATE_ORDER",
+      "details": "New direct_customer placed: NS-2610-4238 by Rahim Uddin (Total: ৳2970)",
+      "timestamp": "2026-10-27T16:42:57.078Z"
+    },
+    {
+      "id": "aud-1793119377077-zmqb",
+      "userId": "admin-test",
+      "userRole": "admin",
+      "action": "UPDATE_USER_STATUS",
+      "details": "User test_reseller_1793119377025@test.com status changed to active",
+      "timestamp": "2026-10-27T16:42:57.077Z"
+    },
+    {
+      "id": "aud-1793119377075-veho",
+      "action": "CREATE_USER",
+      "details": "Created user test_reseller_1793119377025@test.com with role reseller",
+      "timestamp": "2026-10-27T16:42:57.075Z"
+    },
+    {
+      "id": "aud-1793119376779-9s8v",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Store configuration settings updated persistently",
+      "timestamp": "2026-10-27T16:42:56.779Z"
+    },
+    {
+      "id": "aud-1793119376778-hvaw",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Store configuration settings updated persistently",
+      "timestamp": "2026-10-27T16:42:56.778Z"
+    },
+    {
+      "id": "aud-1793119353915-eh4a",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Store configuration settings updated persistently",
+      "timestamp": "2026-10-27T16:42:33.915Z"
+    },
+    {
+      "id": "aud-1793119353914-h0ed",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Store configuration settings updated persistently",
+      "timestamp": "2026-10-27T16:42:33.914Z"
+    },
+    {
+      "id": "log-1793113355150-glui3",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "DATABASE_RESTORE",
+      "details": "Database restored from backup archive",
+      "timestamp": "2026-10-27T15:02:35.150Z"
+    },
+    {
+      "id": "log-1793113355147-lzoj4",
+      "userRole": "admin",
+      "action": "DELETE_PRODUCT",
+      "details": "Deleted product TEST-CSV-100 (Test CSV Item)",
+      "timestamp": "2026-10-27T15:02:35.147Z"
+    },
+    {
+      "id": "log-1793113355145-y2dpv",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "CSV_IMPORT",
+      "details": "CSV import completed: 1 created, 0 updated",
+      "timestamp": "2026-10-27T15:02:35.145Z"
+    },
+    {
+      "id": "log-1793113355142-sz3hd",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-261027-257 changed to SHIPPED",
+      "timestamp": "2026-10-27T15:02:35.142Z"
+    },
+    {
+      "id": "log-1793113355141-bk9cz",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "VERIFY_ADVANCE",
+      "details": "Advance payment for order NS-261027-257 VERIFIED.",
+      "timestamp": "2026-10-27T15:02:35.141Z"
+    },
+    {
+      "id": "log-1793113355140-szha3",
+      "action": "CREATE_ORDER",
+      "details": "Order NS-261027-257 created (reseller_order, total: ৳1780)",
+      "timestamp": "2026-10-27T15:02:35.140Z"
+    },
+    {
+      "id": "log-1793113355139-yn5kz",
+      "action": "CREATE_ORDER",
+      "details": "Order NS-261027-860 created (direct_customer, total: ৳2970)",
+      "timestamp": "2026-10-27T15:02:35.139Z"
+    },
+    {
+      "id": "log-1793113355138-rbgfc",
+      "userId": "admin-test",
+      "userRole": "admin",
+      "action": "UPDATE_USER_STATUS",
+      "details": "User test_reseller_1793113355086@test.com status changed to active",
+      "timestamp": "2026-10-27T15:02:35.138Z"
+    },
+    {
+      "id": "log-1793113355137-q8700",
+      "action": "CREATE_USER",
+      "details": "Created user test_reseller_1793113355086@test.com with role reseller",
+      "timestamp": "2026-10-27T15:02:35.137Z"
+    },
+    {
+      "id": "log-1793113354927-hl568",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Settings updated: minResellerAdvance",
+      "timestamp": "2026-10-27T15:02:34.927Z"
+    },
+    {
+      "id": "log-1793113354927-56dzx",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Settings updated: minResellerAdvance",
+      "timestamp": "2026-10-27T15:02:34.927Z"
+    },
+    {
+      "id": "log-1",
+      "action": "SYSTEM_BOOT",
+      "details": "Nova Shop database initialized with persistent storage schema and Bangladeshi products.",
+      "timestamp": "2026-10-27T15:02:34.925Z"
+    }
+  ],
+  "referralCommissions": [],
+  "withdrawals": [],
+  "emailLogs": []
+}

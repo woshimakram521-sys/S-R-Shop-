@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script>
+      (function() {
+        const origError = console.error;
+        console.error = function(...args) {
+          const msg = args.map(a => (a && (a.message || a.stack)) || String(a)).join(' ');
+          if (msg.includes('WebSocket closed without opened') || msg.includes('@vite/client')) {
+            return;
+          }
+          origError.apply(console, args);
+        };
+        window.addEventListener('error', function(e) {
+          if (e.message && e.message.includes('WebSocket closed without opened')) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+        }, true);
+        window.addEventListener('unhandledrejection', function(e) {
+          const reasonStr = (e.reason && (e.reason.message || e.reason.stack || String(e.reason))) || '';
+          if (reasonStr.includes('WebSocket closed without opened') || reasonStr.includes('@vite/client')) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+        }, true);
+      })();
+    </script>
+    <title>Nova Shop | প্রিমিয়াম অনলাইন শপ ও রিসেলার প্ল্যাটফর্ম</title>
+    <meta name="description" content="Nova Shop - বাংলাদেশের বিশ্বস্ত ও আধুনিক অনলাইন কেনাকাটা এবং রিসেলার প্ল্যাটফর্ম। ক্যাশ অন ডেলিভারি, বিকাশ ও নগদ পেমেন্ট সুবিধা।" />
+    <meta property="og:title" content="Nova Shop - Bangladeshi E-Commerce & Reseller Platform" />
+    <meta property="og:description" content="বাংলাদেশে সবচেয়ে বিশ্বস্ত অনলাইন শপ ও রিসেলার হাব। ঘরে বসে অর্ডার করুন পাইকারি ও খুচরা মূল্যে।" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0f766e" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Nova Shop" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-teal-600 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
