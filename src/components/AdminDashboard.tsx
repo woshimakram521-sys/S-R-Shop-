@@ -181,11 +181,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   useEffect(() => {
     if (settings) {
+      const recipient = settings.testEmailRecipient || settings.contactEmail || 'admin@novashop.com';
       setEditSettings({
         ...settings,
+        testEmailRecipient: recipient,
         smtpPass: '', // Keep empty by default so saved password isn't overwritten
       });
-      setTestEmailRecipient(settings.contactEmail || 'admin@novashop.com');
+      setTestEmailRecipient(recipient);
     }
   }, [settings]);
 
@@ -608,7 +610,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     if (!editSettings) return;
     try {
       setLoading(true);
-      const payload = { ...editSettings };
+      const payload = {
+        ...editSettings,
+        testEmailRecipient: testEmailRecipient.trim() || editSettings.testEmailRecipient || editSettings.contactEmail || '',
+      };
       // Only include smtpPass if admin typed a new one, otherwise keep saved
       if (newPasswordInput.trim() !== '') {
         payload.smtpPass = newPasswordInput.trim();
@@ -617,7 +622,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       }
 
       const updated = await api.updateSettings(payload);
-      setFeedbackMsg({ type: 'success', text: 'সিস্টেম সেটিংস ও জিমেইল কনফিগারেশন নিরাপদে সংরক্ষিত হয়েছে।' });
+      setFeedbackMsg({ type: 'success', text: 'দোকান সেটিংস ও টেস্ট ইমেইল প্রাপক সফলভাবে সংরক্ষিত হয়েছে।' });
       setNewPasswordInput('');
       onRefreshSettings();
     } catch (err: any) {
@@ -2199,13 +2204,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   {/* Test Email Section */}
                   <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <div className="flex-1 w-full">
-                      <label className="block text-[11px] font-bold text-slate-700 mb-1">টেস্ট ইমেইল প্রাপক:</label>
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                        টেস্ট ইমেইল প্রাপক (Test Email Recipient):
+                      </label>
                       <input
                         type="email"
                         value={testEmailRecipient}
-                        onChange={(e) => setTestEmailRecipient(e.target.value)}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setTestEmailRecipient(val);
+                          setEditSettings((prev: any) => ({ ...prev, testEmailRecipient: val }));
+                        }}
                         placeholder="admin@example.com"
-                        className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500/20"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500/20"
                       />
                     </div>
                     <div className="flex items-center gap-2 pt-2 sm:pt-4 w-full sm:w-auto">

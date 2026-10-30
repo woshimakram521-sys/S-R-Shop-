@@ -268,6 +268,7 @@ export interface StoreSettings {
   smtpPass?: string; // Stored server-side only
   hasSmtpPass?: boolean; // Returned by server indicating if password is saved
   smtpFrom?: string;
+  testEmailRecipient?: string;
   emailNotificationsEnabled: boolean;
   emailRecipients: string[];
   emailNotificationEvents: {

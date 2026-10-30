@@ -1213,6 +1213,11 @@ app.post('/api/admin/test-email', requireAdmin, async (req: AuthRequest, res: Re
 
     const result = await emailService.testConnection(testSettings, testRecipient);
     
+    // Automatically persist testRecipient in settings so user never has to re-type it
+    if (testRecipient && testRecipient.trim() !== '') {
+      db.updateSettings({ testEmailRecipient: testRecipient.trim() }, req.user?.userId);
+    }
+
     db.addEmailLog({
       id: `test-${Date.now()}`,
       to: testRecipient || testSettings.smtpUser || 'Unknown',
