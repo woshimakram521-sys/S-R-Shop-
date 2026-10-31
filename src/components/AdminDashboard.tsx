@@ -23,8 +23,12 @@ import {
   Trash2,
   Edit,
   Check,
+  Copy,
   Send,
   Eye,
+  EyeOff,
+  Lock,
+  Key,
   RefreshCw,
   Mail,
   AlertTriangle,
@@ -125,6 +129,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   // Resellers & Registration Verifications
   const [resellers, setResellers] = useState<User[]>([]);
+  const [resellerFilterTab, setResellerFilterTab] = useState<'pending' | 'active' | 'all'>('pending');
+  const [resellerSearchQuery, setResellerSearchQuery] = useState('');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Referrals & Commissions
   const [referralCommissions, setReferralCommissions] = useState<ReferralCommission[]>([]);
@@ -169,6 +176,16 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Editable Settings form
   const [editSettings, setEditSettings] = useState<any>(null);
   const [newPasswordInput, setNewPasswordInput] = useState('');
+
+  // Admin Password Change state
+  const [adminCurrentPassword, setAdminCurrentPassword] = useState('');
+  const [adminNewPassword, setAdminNewPassword] = useState('');
+  const [adminConfirmPassword, setAdminConfirmPassword] = useState('');
+  const [showCurrentPass, setShowCurrentPass] = useState(false);
+  const [showNewPass, setShowNewPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
+  const [passwordChangeLoading, setPasswordChangeLoading] = useState(false);
+  const [passwordFeedback, setPasswordFeedback] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Backup file state
   const [backupList, setBackupList] = useState<string[]>([]);
@@ -293,6 +310,31 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       loadAdminData();
     } catch (err: any) {
       setFeedbackMsg({ type: 'error', text: err.message || 'Action failed' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCopyText = (text: string, id: string) => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(text);
+    }
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleToggleResellerStatus = async (user: User) => {
+    const newStatus = user.status === 'active' ? 'suspended' : 'active';
+    try {
+      setLoading(true);
+      await api.updateResellerStatus(user.id, newStatus);
+      setFeedbackMsg({
+        type: 'success',
+        text: `রিসেলার '${user.name}'-এর অ্যাকাউন্ট স্ট্যাটাস '${newStatus === 'active' ? 'সক্রিয়' : 'স্থগিত'}' করা হয়েছে।`,
+      });
+      loadAdminData();
+    } catch (err: any) {
+      setFeedbackMsg({ type: 'error', text: err.message || 'স্ট্যাটাস পরিবর্তন ব্যর্থ হয়েছে' });
     } finally {
       setLoading(false);
     }
@@ -680,6 +722,38 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   };
 
+  const handleChangeAdminPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordFeedback(null);
+
+    if (!adminCurrentPassword) {
+      setPasswordFeedback({ type: 'error', text: 'বর্তমান পাসওয়ার্ড প্রদান করুন।' });
+      return;
+    }
+    if (!adminNewPassword || adminNewPassword.trim().length < 6) {
+      setPasswordFeedback({ type: 'error', text: 'নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।' });
+      return;
+    }
+    if (adminNewPassword !== adminConfirmPassword) {
+      setPasswordFeedback({ type: 'error', text: 'নতুন পাসওয়ার্ড এবং নিশ্চিতকরণ পাসওয়ার্ড মেলেনি।' });
+      return;
+    }
+
+    try {
+      setPasswordChangeLoading(true);
+      const res = await api.changeAdminPassword(adminCurrentPassword, adminNewPassword);
+      setPasswordFeedback({ type: 'success', text: res.message || 'পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!' });
+      setAdminCurrentPassword('');
+      setAdminNewPassword('');
+      setAdminConfirmPassword('');
+      setFeedbackMsg({ type: 'success', text: 'অ্যাডমিন লগইন পাসওয়ার্ড সফলভাবে আপডেট করা হয়েছে।' });
+    } catch (err: any) {
+      setPasswordFeedback({ type: 'error', text: err.message || 'পাসওয়ার্ড পরিবর্তন ব্যর্থ হয়েছে।' });
+    } finally {
+      setPasswordChangeLoading(false);
+    }
+  };
+
   const handleCsvFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -738,6 +812,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
     return o.orderStatus === resellerOrderStatusFilter;
   });
+
+  // Resellers lists and counts
+  const pendingResellersList = resellers.filter(
+    (r) => r.status !== 'archived' && (r.status === 'pending_approval' || r.regPaymentStatus === 'PENDING_VERIFICATION')
+  );
+  const activeResellersList = resellers.filter(
+    (r) => r.status === 'active' && r.regPaymentStatus === 'APPROVED'
+  );
+  const allResellersList = resellers.filter((r) => r.status !== 'archived');
+
+  const pendingShopOrdersCount = shopOrders.filter((o) => o.orderStatus === 'PENDING').length;
+  const pendingAdvanceOrdersCount = resellerOrders.filter((o) => o.resellerAdvancePayment?.status === 'PENDING_VERIFICATION').length;
+  const pendingWithdrawalsCount = withdrawals.filter((w) => w.status === 'PENDING').length;
+  const totalPendingActionCount = pendingResellersList.length + pendingShopOrdersCount + pendingAdvanceOrdersCount + pendingWithdrawalsCount;
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-50 text-slate-900 flex flex-col overflow-y-auto">
@@ -920,6 +1008,33 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 {authLoading ? 'যাচাই করা হচ্ছে...' : 'লগইন করুন'}
               </button>
             </form>
+
+            {/* Default Admin Credentials Helper */}
+            <div className="mt-5 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 space-y-1.5 shadow-2xs">
+              <div className="font-extrabold flex items-center justify-between text-amber-800">
+                <span className="flex items-center gap-1.5">
+                  <Key className="w-3.5 h-3.5 text-amber-700" />
+                  <span>ডিফল্ট অ্যাডমিন ক্রেডেনশিয়াল</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAdminEmail('admin@novashop.com');
+                    setAdminPassword('admin123');
+                  }}
+                  className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-200/80 hover:bg-amber-300 text-amber-900 cursor-pointer transition"
+                >
+                  ১-ক্লিকে পূরণ করুন
+                </button>
+              </div>
+              <div className="text-[11px] font-mono flex items-center justify-between text-slate-800">
+                <span>ইমেইল: <strong className="font-bold text-slate-900">admin@novashop.com</strong></span>
+                <span>পাসওয়ার্ড: <strong className="font-bold text-slate-900">admin123</strong></span>
+              </div>
+              <p className="text-[10px] text-amber-700 leading-tight">
+                * লগইন করার পর সেটিংস পেজ থেকে যেকোনো সময় পাসওয়ার্ড পরিবর্তন করতে পারবেন।
+              </p>
+            </div>
           </div>
         </div>
       ) : (
@@ -1018,32 +1133,94 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </div>
             </div>
 
-            {/* Quick Navigation Pills (Matching Screenshot 1) */}
+            {/* Urgent Action / Pending Applications Alert Banner */}
+            {totalPendingActionCount > 0 && (
+              <div className="mb-4 p-4 rounded-3xl bg-amber-500/10 border-2 border-amber-400 text-slate-900 shadow-sm space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="p-1.5 rounded-xl bg-amber-500 text-white font-bold text-xs animate-bounce">
+                      🔔
+                    </span>
+                    <h4 className="font-black text-sm text-amber-950">
+                      অপেক্ষমাণ আবেদন ও জরুরী নোটিফিকেশন:
+                    </h4>
+                  </div>
+                  <span className="text-[11px] font-bold text-amber-800 bg-amber-200/80 px-2.5 py-0.5 rounded-full">
+                    {totalPendingActionCount} টি কাজ বাকি
+                  </span>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  {pendingResellersList.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveNav('resellers');
+                        setResellerFilterTab('pending');
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95 cursor-pointer"
+                    >
+                      <Users className="w-3.5 h-3.5" />
+                      <span>রিসেলার আবেদন: {pendingResellersList.length} টি</span>
+                    </button>
+                  )}
+                  {pendingShopOrdersCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setActiveNav('shop_orders')}
+                      className="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95 cursor-pointer"
+                    >
+                      <Package className="w-3.5 h-3.5" />
+                      <span>শপ অর্ডার: {pendingShopOrdersCount} টি</span>
+                    </button>
+                  )}
+                  {pendingAdvanceOrdersCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setActiveNav('reseller_orders')}
+                      className="px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95 cursor-pointer"
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5" />
+                      <span>অগ্রিম ডেলিভারি যাচাই: {pendingAdvanceOrdersCount} টি</span>
+                    </button>
+                  )}
+                  {pendingWithdrawalsCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setActiveNav('withdrawals')}
+                      className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95 cursor-pointer"
+                    >
+                      <Wallet className="w-3.5 h-3.5" />
+                      <span>উইথড্রল রিকোয়েস্ট: {pendingWithdrawalsCount} টি</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Quick Navigation Pills */}
             <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-5 scrollbar-none">
               <button
                 type="button"
-                onClick={() => setActiveNav('settings')}
-                className="px-4 py-2 rounded-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 text-xs font-bold whitespace-nowrap shadow-2xs flex items-center gap-1.5 transition cursor-pointer"
+                onClick={() => {
+                  setActiveNav('resellers');
+                  setResellerFilterTab('pending');
+                }}
+                className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap shadow-2xs flex items-center gap-1.5 transition cursor-pointer ${
+                  activeNav === 'resellers'
+                    ? 'bg-red-600 text-white'
+                    : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200'
+                }`}
               >
-                <Truck className="w-3.5 h-3.5 text-rose-600" />
-                <span>ডেলিভারি চার্জ</span>
+                <Users className="w-3.5 h-3.5 text-amber-500" />
+                <span>রিসেলার আবেদন</span>
+                {pendingResellersList.length > 0 && (
+                  <span className="bg-amber-500 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-0.5">
+                    {pendingResellersList.length}
+                  </span>
+                )}
               </button>
-              <button
-                type="button"
-                onClick={() => setActiveNav('settings')}
-                className="px-4 py-2 rounded-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 text-xs font-bold whitespace-nowrap shadow-2xs flex items-center gap-1.5 transition cursor-pointer"
-              >
-                <Gift className="w-3.5 h-3.5 text-rose-600" />
-                <span>কুপন ও ছাড়</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveNav('settings')}
-                className="px-4 py-2 rounded-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 text-xs font-bold whitespace-nowrap shadow-2xs flex items-center gap-1.5 transition cursor-pointer"
-              >
-                <Settings className="w-3.5 h-3.5 text-rose-600" />
-                <span>দোকান সেটিংস</span>
-              </button>
+
               <button
                 type="button"
                 onClick={() => setActiveNav('shop_orders')}
@@ -1053,7 +1230,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               >
                 <Package className="w-3.5 h-3.5" />
                 <span>শপ অর্ডার</span>
+                {pendingShopOrdersCount > 0 && (
+                  <span className="bg-rose-500 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-0.5">
+                    {pendingShopOrdersCount}
+                  </span>
+                )}
               </button>
+
               <button
                 type="button"
                 onClick={() => setActiveNav('reseller_orders')}
@@ -1063,7 +1246,40 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
                 <span>রিসেলার অর্ডার</span>
+                {pendingAdvanceOrdersCount > 0 && (
+                  <span className="bg-rose-500 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-0.5">
+                    {pendingAdvanceOrdersCount}
+                  </span>
+                )}
               </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveNav('products')}
+                className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap shadow-2xs flex items-center gap-1.5 transition cursor-pointer ${
+                  activeNav === 'products' ? 'bg-red-600 text-white' : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200'
+                }`}
+              >
+                <ShoppingBag className="w-3.5 h-3.5" />
+                <span>পণ্য তালিকা</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveNav('withdrawals')}
+                className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap shadow-2xs flex items-center gap-1.5 transition cursor-pointer ${
+                  activeNav === 'withdrawals' ? 'bg-red-600 text-white' : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200'
+                }`}
+              >
+                <Wallet className="w-3.5 h-3.5" />
+                <span>উইথড্রল</span>
+                {pendingWithdrawalsCount > 0 && (
+                  <span className="bg-emerald-600 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-0.5">
+                    {pendingWithdrawalsCount}
+                  </span>
+                )}
+              </button>
+
               <button
                 type="button"
                 onClick={() => setActiveNav('categories')}
@@ -1074,15 +1290,27 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <Layers className="w-3.5 h-3.5" />
                 <span>ক্যাটাগরি</span>
               </button>
+
               <button
                 type="button"
-                onClick={() => setActiveNav('products')}
+                onClick={() => setActiveNav('settings')}
                 className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap shadow-2xs flex items-center gap-1.5 transition cursor-pointer ${
-                  activeNav === 'products' ? 'bg-red-600 text-white' : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200'
+                  activeNav === 'settings' ? 'bg-red-600 text-white' : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200'
                 }`}
               >
-                <ShoppingBag className="w-3.5 h-3.5" />
-                <span>পণ্য তালিকা</span>
+                <Settings className="w-3.5 h-3.5 text-rose-600" />
+                <span>দোকান সেটিংস</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveNav('stats')}
+                className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap shadow-2xs flex items-center gap-1.5 transition cursor-pointer ${
+                  activeNav === 'stats' ? 'bg-red-600 text-white' : 'bg-white hover:bg-slate-50 text-slate-800 border border-slate-200'
+                }`}
+              >
+                <TrendingUp className="w-3.5 h-3.5" />
+                <span>ওভারভিউ</span>
               </button>
             </div>
 
@@ -1587,75 +1815,356 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             )}
 
             {/* 6. RESELLERS & REGISTRATION (Point 9: Auto-referral bonus on approval) */}
-            {activeNav === 'resellers' && (
-              <div className="space-y-4">
-                <h2 className="text-base sm:text-lg font-black text-slate-900">
-                  রিসেলার্স ও রেজিস্ট্রেশন পেমেন্ট ভেরিফিকেশন
-                </h2>
+            {activeNav === 'resellers' && (() => {
+              const isApplicantPending = (r: User) =>
+                (r.status === 'pending_approval' || r.regPaymentStatus === 'PENDING_VERIFICATION') && r.status !== 'archived';
 
-                <div className="space-y-3">
-                  {resellers.length === 0 ? (
-                    <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 text-center text-slate-500 text-xs font-semibold">
-                      কোনো রিসেলার নেই।
+              const filteredList = resellers
+                .filter((r) => r.status !== 'archived')
+                .filter((r) => {
+                  if (resellerFilterTab === 'pending') {
+                    return isApplicantPending(r);
+                  }
+                  if (resellerFilterTab === 'active') {
+                    return r.status === 'active' && r.regPaymentStatus !== 'PENDING_VERIFICATION';
+                  }
+                  return true;
+                })
+                .filter((r) => {
+                  if (!resellerSearchQuery.trim()) return true;
+                  const q = resellerSearchQuery.toLowerCase().trim();
+                  return (
+                    (r.name && r.name.toLowerCase().includes(q)) ||
+                    (r.phone && r.phone.includes(q)) ||
+                    (r.email && r.email.toLowerCase().includes(q)) ||
+                    (r.businessName && r.businessName.toLowerCase().includes(q)) ||
+                    (r.registrationTxId && r.registrationTxId.toLowerCase().includes(q)) ||
+                    (r.registrationSenderPhone && r.registrationSenderPhone.includes(q)) ||
+                    (r.referralCode && r.referralCode.toLowerCase().includes(q))
+                  );
+                });
+
+              return (
+                <div className="space-y-4">
+                  {/* Section Title & Subtitle */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h2 className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+                        <Users className="w-5 h-5 text-teal-800" />
+                        <span>রিসেলার আবেদন ও অ্যাকাউন্ট ম্যানেজমেন্ট</span>
+                      </h2>
+                      <p className="text-xs text-slate-500 font-medium">
+                        নতুন আবেদনসমূহ পর্যালোচনা, ১-ক্লিকে অনুমোদন ও সক্রিয় রিসেলারদের পরিচালনা
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={loadAdminData}
+                      disabled={loading}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs self-start sm:self-auto cursor-pointer"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+                      <span>রিফ্রেশ</span>
+                    </button>
+                  </div>
+
+                  {/* Filter Sub-Tabs */}
+                  <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-3">
+                    <button
+                      type="button"
+                      onClick={() => setResellerFilterTab('pending')}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer ${
+                        resellerFilterTab === 'pending'
+                          ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20'
+                          : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
+                      }`}
+                    >
+                      <span>🔔 অপেক্ষমাণ আবেদন</span>
+                      <span
+                        className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                          resellerFilterTab === 'pending'
+                            ? 'bg-white text-amber-800'
+                            : 'bg-amber-200 text-amber-900'
+                        }`}
+                      >
+                        {pendingResellersList.length}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setResellerFilterTab('active')}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer ${
+                        resellerFilterTab === 'active'
+                          ? 'bg-emerald-700 text-white shadow-md shadow-emerald-700/20'
+                          : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
+                      }`}
+                    >
+                      <span>✅ সক্রিয় রিসেলার</span>
+                      <span
+                        className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                          resellerFilterTab === 'active'
+                            ? 'bg-white text-emerald-800'
+                            : 'bg-emerald-200 text-emerald-900'
+                        }`}
+                      >
+                        {activeResellersList.length}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setResellerFilterTab('all')}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer ${
+                        resellerFilterTab === 'all'
+                          ? 'bg-teal-800 text-white shadow-md shadow-teal-800/20'
+                          : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
+                      }`}
+                    >
+                      <span>📋 সকল আবেদন ও রিসেলার</span>
+                      <span
+                        className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                          resellerFilterTab === 'all'
+                            ? 'bg-white text-teal-800'
+                            : 'bg-slate-200 text-slate-700'
+                        }`}
+                      >
+                        {allResellersList.length}
+                      </span>
+                    </button>
+                  </div>
+
+                  {/* Search Input Bar */}
+                  <div className="relative">
+                    <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      value={resellerSearchQuery}
+                      onChange={(e) => setResellerSearchQuery(e.target.value)}
+                      placeholder="নাম, ফোন নম্বর, TrxID, ইমেইল বা শপের নাম দিয়ে খুঁজুন..."
+                      className="w-full pl-9 pr-8 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-teal-700/20"
+                    />
+                    {resellerSearchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => setResellerSearchQuery('')}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Empty State */}
+                  {filteredList.length === 0 ? (
+                    <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2">
+                      <div className="w-12 h-12 mx-auto rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-xl">
+                        {resellerFilterTab === 'pending' ? '🔔' : '👥'}
+                      </div>
+                      <h4 className="font-bold text-sm text-slate-800">
+                        {resellerSearchQuery
+                          ? 'কোনো ফলাফল পাওয়া যায়নি'
+                          : resellerFilterTab === 'pending'
+                          ? 'বর্তমানে কোনো অপেক্ষমাণ রিসেলার আবেদন নেই'
+                          : resellerFilterTab === 'active'
+                          ? 'বর্তমানে কোনো সক্রিয় রিসেলার নেই'
+                          : 'কোনো রিসেলার রেকর্ড নেই'}
+                      </h4>
+                      <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                        {resellerSearchQuery
+                          ? 'অন্য কোনো নাম বা ফোন নম্বর দিয়ে খুঁজে দেখুন।'
+                          : resellerFilterTab === 'pending'
+                          ? 'নতুন কেউ রিসেলার হিসেবে রেজিস্ট্রেশন ফি জমা দিলে তা এখানে প্রদর্শিত হবে।'
+                          : 'রিসেলার আবেদন অনুমোদন করলে সক্রিয় রিসেলার হিসেবে এখানে দেখতে পাবেন।'}
+                      </p>
                     </div>
                   ) : (
-                    resellers.map((r) => (
-                      <div key={r.id} className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col sm:flex-row justify-between gap-4 text-xs">
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold text-sm text-slate-900">{r.name}</span>
-                            <span className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-mono font-bold">
-                              Ref: {r.referralCode || 'N/A'}
-                            </span>
-                            <span
-                              className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                                r.status === 'active'
-                                  ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                                  : 'bg-amber-100 text-amber-800 border border-amber-300'
-                              }`}
-                            >
-                              {r.status}
-                            </span>
-                          </div>
-                          <div className="text-slate-600">
-                            {r.businessName ? `${r.businessName} • ` : ''}ইমেইল: {r.email} • ফোন: {r.phone}
-                          </div>
-                          <div className="text-slate-600">
-                            রেজিস্ট্রেশন ফি: <strong>৳{r.registrationFeeSnapshot || 200}</strong> • TrxID: <strong className="font-mono text-teal-800">{r.registrationTxId || 'None'}</strong> • মেথড: {r.registrationMethod?.toUpperCase()}
-                          </div>
-                          {r.referredBy && (
-                            <div className="text-purple-700 font-bold">রেফারেল কোড ব্যবহার করেছে: {r.referredBy}</div>
-                          )}
-                        </div>
+                    /* Reseller Cards List */
+                    <div className="space-y-3.5">
+                      {filteredList.map((r) => {
+                        const isPending = isApplicantPending(r);
 
-                        <div className="flex sm:flex-col items-center sm:items-end justify-between gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
-                          {r.regPaymentStatus === 'PENDING_VERIFICATION' ? (
-                            <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => handleVerifyResellerPayment(r.id, 'VERIFY')}
-                                className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs cursor-pointer shadow-xs"
-                              >
-                                অনুমোদন ও বোনাস ক্রেডিট
-                              </button>
-                              <button
-                                onClick={() => handleVerifyResellerPayment(r.id, 'REJECT')}
-                                className="px-2.5 py-1.5 rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 font-bold text-xs cursor-pointer"
-                              >
-                                বাতিল
-                              </button>
+                        return (
+                          <div
+                            key={r.id}
+                            className={`rounded-2xl border transition shadow-xs ${
+                              isPending
+                                ? 'bg-amber-50/40 border-2 border-amber-300 p-4 sm:p-5'
+                                : 'bg-white border-slate-200 p-4'
+                            }`}
+                          >
+                            {/* Card Header */}
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200/80">
+                              <div className="flex items-center gap-2.5 flex-wrap">
+                                <span className="font-black text-sm text-slate-900">{r.name}</span>
+                                {r.businessName && (
+                                  <span className="text-xs font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded-lg border border-teal-200">
+                                    🏢 {r.businessName}
+                                  </span>
+                                )}
+                                <span className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-mono font-bold">
+                                  Ref: {r.referralCode || 'N/A'}
+                                </span>
+                              </div>
+
+                              <div>
+                                {isPending ? (
+                                  <span className="inline-flex items-center gap-1 text-[11px] font-black px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-xs animate-pulse">
+                                    <span>🔔</span>
+                                    <span>অপেক্ষমাণ নতুন আবেদন</span>
+                                  </span>
+                                ) : r.status === 'active' ? (
+                                  <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                    <span>✅</span>
+                                    <span>অনুমোদিত ও সক্রিয়</span>
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300">
+                                    <span>🚫</span>
+                                    <span>{r.regPaymentStatus === 'REJECTED' ? 'বাতিলকৃত' : 'স্থগিত (Suspended)'}</span>
+                                  </span>
+                                )}
+                              </div>
                             </div>
-                          ) : (
-                            <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-lg">
-                              রেজিস্ট্রেশন অনুমোদিত
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    ))
+
+                            {/* Card Body Details */}
+                            <div className="py-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
+                              <div>
+                                <span className="text-slate-500 block text-[11px]">যোগাযোগ ফোন নম্বর:</span>
+                                <a
+                                  href={`tel:${r.phone}`}
+                                  className="font-bold text-slate-900 hover:text-teal-800 hover:underline inline-flex items-center gap-1"
+                                >
+                                  <Phone className="w-3 h-3 text-slate-400" />
+                                  <span>{r.phone}</span>
+                                </a>
+                              </div>
+
+                              <div>
+                                <span className="text-slate-500 block text-[11px]">ইমেইল ঠিকানা:</span>
+                                <span className="font-semibold text-slate-800">{r.email}</span>
+                              </div>
+
+                              <div>
+                                <span className="text-slate-500 block text-[11px]">রেজিস্ট্রেশন ফি:</span>
+                                <span className="font-black text-rose-700 text-sm">
+                                  ৳{r.registrationFeeSnapshot || settings?.resellerRegistrationFee || 200}
+                                </span>
+                              </div>
+
+                              <div>
+                                <span className="text-slate-500 block text-[11px]">পেমেন্ট মেথড:</span>
+                                <span className="font-bold text-slate-900 uppercase">
+                                  {r.registrationMethod || 'bKash'}
+                                </span>
+                              </div>
+
+                              <div>
+                                <span className="text-slate-500 block text-[11px]">প্রেরক মোবাইল নম্বর:</span>
+                                <span className="font-mono font-bold text-slate-900">
+                                  {r.registrationSenderPhone || r.phone || 'দেওয়া হয়নি'}
+                                </span>
+                              </div>
+
+                              <div>
+                                <span className="text-slate-500 block text-[11px]">ট্রানজেকশন আইডি (TrxID):</span>
+                                <div className="flex items-center gap-1.5 mt-0.5">
+                                  <span className="font-mono font-black text-teal-900 bg-white px-2 py-0.5 rounded-lg border border-teal-300 text-xs">
+                                    {r.registrationTxId || 'None'}
+                                  </span>
+                                  {r.registrationTxId && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleCopyText(r.registrationTxId!, `trx-${r.id}`)}
+                                      className="p-1 rounded-md hover:bg-teal-100 text-teal-800 transition cursor-pointer"
+                                      title="কপি করুন"
+                                    >
+                                      {copiedId === `trx-${r.id}` ? (
+                                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                      ) : (
+                                        <Copy className="w-3.5 h-3.5" />
+                                      )}
+                                    </button>
+                                  )}
+                                  {copiedId === `trx-${r.id}` && (
+                                    <span className="text-[10px] font-bold text-emerald-600">কপি হয়েছে!</span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Additional info: Referral bonus notice & application date */}
+                            <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px]">
+                              <div>
+                                {r.referredBy ? (
+                                  <div className="text-purple-700 font-bold bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-200 inline-block">
+                                    🎁 রেফারেল কোড: <strong className="font-mono">{r.referredBy}</strong> (অনুমোদন করলে রেফারার স্বয়ংক্রিয়ভাবে ৳{settings?.referralCommissionAmount || 50} বোনাস পাবে)
+                                  </div>
+                                ) : (
+                                  <span className="text-slate-500">সরাসরি রেজিস্ট্রেশন (কোনো রেফারেল কোড নেই)</span>
+                                )}
+                              </div>
+                              <div className="text-slate-500 font-medium">
+                                আবেদনের তারিখ: {r.createdAt ? new Date(r.createdAt).toLocaleString('bn-BD') : 'N/A'}
+                              </div>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="mt-3 pt-3 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-2">
+                              {isPending ? (
+                                <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleVerifyResellerPayment(r.id, 'VERIFY')}
+                                    disabled={loading}
+                                    className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/20 transition active:scale-95 cursor-pointer disabled:opacity-50"
+                                  >
+                                    <Check className="w-4 h-4" />
+                                    <span>অনুমোদন ও একাউন্ট সক্রিয় করুন</span>
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    onClick={() => handleVerifyResellerPayment(r.id, 'REJECT')}
+                                    disabled={loading}
+                                    className="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 font-bold text-xs transition cursor-pointer disabled:opacity-50"
+                                  >
+                                    ✕ আবেদন বাতিল
+                                  </button>
+                                </div>
+                              ) : (
+                                <div className="flex flex-wrap items-center justify-between w-full gap-2">
+                                  <div className="flex items-center gap-4 text-xs font-semibold text-slate-700">
+                                    <span>জমা ব্যালেন্স: <strong className="text-emerald-700 font-black">৳{r.commissionBalance || 0}</strong></span>
+                                    <span>মোট উত্তোলন: <strong className="text-slate-900 font-black">৳{r.totalWithdrawn || 0}</strong></span>
+                                  </div>
+
+                                  <div className="flex items-center gap-2">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleToggleResellerStatus(r)}
+                                      disabled={loading}
+                                      className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
+                                        r.status === 'active'
+                                          ? 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300'
+                                          : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300'
+                                      }`}
+                                    >
+                                      {r.status === 'active' ? 'অ্যাকাউন্ট স্থগিত করুন' : 'অ্যাকাউন্ট পুনরায় সক্রিয় করুন'}
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   )}
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
             {/* 7. RESELLER PROFITS (Section 12: Profit Records & Approval) */}
             {activeNav === 'profits' && (
@@ -1870,17 +2379,165 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
             {/* 11. SETTINGS & GMAIL SMTP */}
             {activeNav === 'settings' && editSettings && (
-              <form onSubmit={handleSaveSettings} className="space-y-6">
+              <div className="space-y-6">
                 <div>
                   <h2 className="text-base sm:text-lg font-black text-slate-900">
                     দোকান ও সিস্টেম সেটিংস (Store & System Settings)
                   </h2>
                   <p className="text-xs text-slate-500 font-medium">
-                    ব্র্যান্ডিং, পেমেন্ট নম্বর, রিসেলার রুলস এবং জিমেইল নোটিফিকেশন কনফিগার করুন
+                    অ্যাডমিন সিকিউরিটি, ব্র্যান্ডিং, পেমেন্ট নম্বর এবং জিমেইল নোটিফিকেশন কনফিগার করুন
                   </p>
                 </div>
 
-                {/* 1. General Store Info & Branding */}
+                {/* A. Dedicated Admin Security & Password Change Card */}
+                <div className="p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/90 shadow-xs space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                    <div className="flex items-center gap-2.5">
+                      <div className="p-2.5 rounded-2xl bg-amber-50 text-amber-700 font-bold border border-amber-200/60 shadow-2xs">
+                        <Lock className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-extrabold text-sm sm:text-base text-slate-900 flex items-center gap-2">
+                          <span>অ্যাডমিন লগইন ও পাসওয়ার্ড পরিবর্তন</span>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                            সক্রিয়
+                          </span>
+                        </h3>
+                        <p className="text-[11px] text-slate-500">
+                          আপনার অ্যাডমিন অ্যাকাউন্টের পাসওয়ার্ড পরিবর্তন ও নিরাপত্তা ম্যানেজ করুন
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="text-right text-xs bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-2xl self-start sm:self-auto">
+                      <span className="text-slate-500 text-[10px] block">লগইনকৃত অ্যাডমিন:</span>
+                      <strong className="font-mono text-slate-800 font-bold">{currentUser?.email || 'admin@novashop.com'}</strong>
+                    </div>
+                  </div>
+
+                  {/* Informational Callout regarding default credentials */}
+                  <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/60 border border-amber-200/80 text-xs text-amber-950 flex items-start gap-2.5">
+                    <Key className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                    <div className="space-y-0.5">
+                      <p className="font-bold">
+                        সিস্টেমের ডিফল্ট অ্যাডমিন পাসওয়ার্ড ছিল: <span className="font-mono bg-white px-2 py-0.5 rounded-lg border border-amber-200 font-black text-rose-700">admin123</span>
+                      </p>
+                      <p className="text-[11px] text-amber-800">
+                        নিরাপত্তা জোরদার করতে নিচে বর্তমান পাসওয়ার্ড এবং আপনার পছন্দের নতুন পাসওয়ার্ড লিখে 'পাসওয়ার্ড আপডেট করুন' বাটনে ক্লিক করুন।
+                      </p>
+                    </div>
+                  </div>
+
+                  {passwordFeedback && (
+                    <div
+                      className={`p-3.5 rounded-2xl border text-xs font-semibold flex items-center justify-between ${
+                        passwordFeedback.type === 'success'
+                          ? 'bg-emerald-50 border-emerald-300 text-emerald-900'
+                          : 'bg-rose-50 border-rose-300 text-rose-900'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        {passwordFeedback.type === 'success' ? (
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        ) : (
+                          <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                        )}
+                        <span>{passwordFeedback.text}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setPasswordFeedback(null)}
+                        className="text-xs hover:opacity-70 p-1 cursor-pointer"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleChangeAdminPassword} className="space-y-3.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          বর্তমান পাসওয়ার্ড <span className="text-rose-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <input
+                            type={showCurrentPass ? 'text' : 'password'}
+                            value={adminCurrentPassword}
+                            onChange={(e) => setAdminCurrentPassword(e.target.value)}
+                            placeholder="যেমন: admin123"
+                            className="w-full px-3.5 py-2.5 pr-9 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowCurrentPass(!showCurrentPass)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                          >
+                            {showCurrentPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          নতুন পাসওয়ার্ড <span className="text-rose-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <input
+                            type={showNewPass ? 'text' : 'password'}
+                            value={adminNewPassword}
+                            onChange={(e) => setAdminNewPassword(e.target.value)}
+                            placeholder="কমপক্ষে ৬ অক্ষর"
+                            className="w-full px-3.5 py-2.5 pr-9 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowNewPass(!showNewPass)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                          >
+                            {showNewPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          নতুন পাসওয়ার্ড নিশ্চিত করুন <span className="text-rose-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <input
+                            type={showConfirmPass ? 'text' : 'password'}
+                            value={adminConfirmPassword}
+                            onChange={(e) => setAdminConfirmPassword(e.target.value)}
+                            placeholder="পুনরায় নতুন পাসওয়ার্ড লিখুন"
+                            className="w-full px-3.5 py-2.5 pr-9 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowConfirmPass(!showConfirmPass)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                          >
+                            {showConfirmPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end pt-1">
+                      <button
+                        type="submit"
+                        disabled={passwordChangeLoading}
+                        className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-700 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold text-xs shadow-md shadow-amber-600/20 cursor-pointer disabled:opacity-50 transition active:scale-[0.99] flex items-center gap-2"
+                      >
+                        <Lock className="w-3.5 h-3.5" />
+                        <span>{passwordChangeLoading ? 'আপডেট হচ্ছে...' : 'পাসওয়ার্ড আপডেট করুন'}</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <form onSubmit={handleSaveSettings} className="space-y-6">
+                  {/* 1. General Store Info & Branding */}
                 <div className="p-5 rounded-3xl bg-white border border-slate-200/90 shadow-xs space-y-4">
                   <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
                     <span className="p-2 rounded-xl bg-red-50 text-red-600 font-bold">🏪</span>
@@ -2354,7 +3011,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                   </button>
                 </div>
               </form>
-            )}
+            </div>
+          )}
 
             {/* 12. BACKUP & RESTORE */}
             {activeNav === 'backup' && (

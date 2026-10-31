@@ -274,6 +274,19 @@ export const Header: React.FC<HeaderProps> = ({
               {lang === 'bn' ? 'আপনার অর্ডার ট্র্যাক করুন' : 'Track Your Order'}
             </button>
 
+            {onOpenAdminPanel && (
+              <button
+                onClick={() => {
+                  onOpenAdminPanel();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-2 p-2.5 rounded-xl bg-slate-900 text-white font-semibold text-sm cursor-pointer shadow-xs hover:bg-slate-800 transition"
+              >
+                <ShieldCheck className="w-4 h-4 text-rose-400" />
+                <span>{lang === 'bn' ? 'অ্যাডমিন কন্ট্রোল প্যানেল' : 'Admin Control Panel'}</span>
+              </button>
+            )}
+
             {currentUser && (
               <div className="p-2.5 bg-slate-100 rounded-xl flex items-center justify-between text-xs">
                 <span className="font-medium text-slate-700">{currentUser.name} ({currentUser.role})</span>

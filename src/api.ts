@@ -337,6 +337,18 @@ export const api = {
       method: 'DELETE',
     }),
 
+  changeAdminPassword: (currentPassword: string, newPassword: string) =>
+    request<{ success: boolean; message: string }>('/api/admin/change-password', {
+      method: 'POST',
+      body: JSON.stringify({ currentPassword, newPassword }),
+    }),
+
+  changePassword: (currentPassword: string, newPassword: string) =>
+    request<{ success: boolean; message: string }>('/api/auth/change-password', {
+      method: 'POST',
+      body: JSON.stringify({ currentPassword, newPassword }),
+    }),
+
   getAdminStats: () => request<any>('/api/admin/stats'),
 
   // CSV

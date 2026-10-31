@@ -38,7 +38,7 @@
       "support@novashop.bd"
     ],
     "emailNotificationEvents": {
-      "newShopOrder": true,
+      "newShopOrder": false,
       "newResellerOrder": true,
       "resellerRegistration": true,
       "registrationPaymentSubmitted": true,
@@ -47,11 +47,13 @@
       "orderStatusChanged": true,
       "commissionApproved": true,
       "withdrawalRequested": true,
-      "withdrawalPaid": true
+      "withdrawalPaid": true,
+      "profitCredited": true
     },
     "whatsappNumber": "+8801712345678",
     "whatsappEnabled": true,
-    "hasSmtpPass": true
+    "hasSmtpPass": true,
+    "testEmailRecipient": "support@novashop.bd"
   },
   "products": [
     {
@@ -147,7 +149,7 @@
       "shopPrice": 1450,
       "resellerPrice": 1100,
       "regularPrice": 2200,
-      "stock": 11,
+      "stock": 5,
       "variants": [
         {
           "id": "v1",
@@ -1212,6 +1214,216 @@
       "description": "খাঁটি সুতি কাপড়",
       "isPublished": true,
       "createdAt": "2026-10-30T15:13:19.509Z"
+    },
+    {
+      "id": "prod-1793373436532-lq18",
+      "sku": "LEGACY-1793373436531",
+      "name": "Legacy Handloom Cotton Shirt",
+      "category": "mens-fashion",
+      "shopPrice": 850,
+      "resellerPrice": 550,
+      "regularPrice": 1100,
+      "resellerMaxPrice": 880,
+      "stock": 20,
+      "variants": [
+        {
+          "id": "var-5yeu",
+          "name": "সাইজ",
+          "options": [
+            "M",
+            "L"
+          ]
+        },
+        {
+          "id": "var-wmm6",
+          "name": "রং",
+          "options": [
+            "সাদা"
+          ]
+        }
+      ],
+      "images": [
+        "https://example.com/legacy.jpg"
+      ],
+      "description": "Comfortable cotton shirt",
+      "isPublished": true,
+      "createdAt": "2026-10-30T15:17:16.532Z"
+    },
+    {
+      "id": "prod-1793373436536-056w",
+      "sku": "NEW-BN-1793373436535",
+      "name": "জামদানি কটন পাঞ্জাবি",
+      "category": "traditional-wear",
+      "shopPrice": 1500,
+      "resellerPrice": 1000,
+      "regularPrice": 2000,
+      "resellerMaxPrice": 1850,
+      "stock": 15,
+      "variants": [
+        {
+          "id": "var-ugd7",
+          "name": "সাইজ",
+          "options": [
+            "40",
+            "42"
+          ]
+        },
+        {
+          "id": "var-ow2v",
+          "name": "রং",
+          "options": [
+            "কালো",
+            "লাল"
+          ]
+        }
+      ],
+      "images": [
+        "https://example.com/p1.jpg",
+        "https://example.com/p2.jpg"
+      ],
+      "description": "খাঁটি সুতি কাপড়",
+      "isPublished": true,
+      "createdAt": "2026-10-30T15:17:16.536Z"
+    },
+    {
+      "id": "prod-1793373790794-7woh",
+      "sku": "LEGACY-1793373790789",
+      "name": "Legacy Handloom Cotton Shirt",
+      "category": "mens-fashion",
+      "shopPrice": 850,
+      "resellerPrice": 550,
+      "regularPrice": 1100,
+      "resellerMaxPrice": 880,
+      "stock": 20,
+      "variants": [
+        {
+          "id": "var-7fwb",
+          "name": "সাইজ",
+          "options": [
+            "M",
+            "L"
+          ]
+        },
+        {
+          "id": "var-zuij",
+          "name": "রং",
+          "options": [
+            "সাদা"
+          ]
+        }
+      ],
+      "images": [
+        "https://example.com/legacy.jpg"
+      ],
+      "description": "Comfortable cotton shirt",
+      "isPublished": true,
+      "createdAt": "2026-10-30T15:23:10.794Z"
+    },
+    {
+      "id": "prod-1793373790798-83ei",
+      "sku": "NEW-BN-1793373790797",
+      "name": "জামদানি কটন পাঞ্জাবি",
+      "category": "traditional-wear",
+      "shopPrice": 1500,
+      "resellerPrice": 1000,
+      "regularPrice": 2000,
+      "resellerMaxPrice": 1850,
+      "stock": 15,
+      "variants": [
+        {
+          "id": "var-lqvi",
+          "name": "সাইজ",
+          "options": [
+            "40",
+            "42"
+          ]
+        },
+        {
+          "id": "var-v9m7",
+          "name": "রং",
+          "options": [
+            "কালো",
+            "লাল"
+          ]
+        }
+      ],
+      "images": [
+        "https://example.com/p1.jpg",
+        "https://example.com/p2.jpg"
+      ],
+      "description": "খাঁটি সুতি কাপড়",
+      "isPublished": true,
+      "createdAt": "2026-10-30T15:23:10.799Z"
+    },
+    {
+      "id": "prod-1793374662642-mx2f",
+      "sku": "LEGACY-1793374662640",
+      "name": "Legacy Handloom Cotton Shirt",
+      "category": "mens-fashion",
+      "shopPrice": 850,
+      "resellerPrice": 550,
+      "regularPrice": 1100,
+      "resellerMaxPrice": 880,
+      "stock": 20,
+      "variants": [
+        {
+          "id": "var-ad79",
+          "name": "সাইজ",
+          "options": [
+            "M",
+            "L"
+          ]
+        },
+        {
+          "id": "var-gilc",
+          "name": "রং",
+          "options": [
+            "সাদা"
+          ]
+        }
+      ],
+      "images": [
+        "https://example.com/legacy.jpg"
+      ],
+      "description": "Comfortable cotton shirt",
+      "isPublished": true,
+      "createdAt": "2026-10-30T15:37:42.642Z"
+    },
+    {
+      "id": "prod-1793374662646-0a9b",
+      "sku": "NEW-BN-1793374662645",
+      "name": "জামদানি কটন পাঞ্জাবি",
+      "category": "traditional-wear",
+      "shopPrice": 1500,
+      "resellerPrice": 1000,
+      "regularPrice": 2000,
+      "resellerMaxPrice": 1850,
+      "stock": 15,
+      "variants": [
+        {
+          "id": "var-5eg5",
+          "name": "সাইজ",
+          "options": [
+            "40",
+            "42"
+          ]
+        },
+        {
+          "id": "var-xbez",
+          "name": "রং",
+          "options": [
+            "কালো",
+            "লাল"
+          ]
+        }
+      ],
+      "images": [
+        "https://example.com/p1.jpg",
+        "https://example.com/p2.jpg"
+      ],
+      "description": "খাঁটি সুতি কাপড়",
+      "isPublished": true,
+      "createdAt": "2026-10-30T15:37:42.646Z"
     }
   ],
   "categories": [
@@ -1323,6 +1535,213 @@
     }
   ],
   "orders": [
+    {
+      "orderType": "direct_customer",
+      "customerName": "Cancel Test Customer",
+      "customerPhone": "01700112233",
+      "customerAddress": "Dhanmondi, Dhaka",
+      "deliveryZoneId": "zone-1",
+      "deliveryZoneName": "Inside Dhaka",
+      "deliveryCharge": 70,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 3,
+          "unitPrice": 1450,
+          "costPrice": 1450,
+          "subtotal": 4350
+        }
+      ],
+      "subtotal": 4350,
+      "totalAmount": 4420,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "orderStatus": "CANCELLED",
+      "id": "NS-2610-3328",
+      "createdAt": "2026-10-30T15:37:42.688Z",
+      "updatedAt": "2026-10-30T15:37:42.692Z"
+    },
+    {
+      "orderType": "reseller_order",
+      "resellerId": "usr-1793280772944-5gjk",
+      "resellerName": "Asif Karim",
+      "resellerPhone": "01799887766",
+      "customerName": "Valid Reseller Customer",
+      "customerPhone": "01711223344",
+      "customerAddress": "Mirpur-10, Dhaka",
+      "deliveryZoneId": "zone-1",
+      "deliveryZoneName": "Inside Dhaka",
+      "deliveryCharge": 70,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 2,
+          "unitPrice": 1400,
+          "costPrice": 1100,
+          "subtotal": 2800
+        }
+      ],
+      "subtotal": 2800,
+      "totalAmount": 2870,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "orderStatus": "COMPLETED",
+      "resellerAdvancePayment": {
+        "requiredAmount": 50,
+        "paidAmount": 50,
+        "method": "bkash",
+        "txId": "BK-1793374662621-ORD",
+        "status": "VERIFIED",
+        "verifiedAt": "2026-10-30T15:37:42.626Z",
+        "verifiedBy": "admin",
+        "adminNotes": "Advance ৳50 verified"
+      },
+      "id": "NS-2610-4972",
+      "createdAt": "2026-10-30T15:37:42.621Z",
+      "updatedAt": "2026-10-30T15:37:42.676Z"
+    },
+    {
+      "orderType": "direct_customer",
+      "customerName": "Cancel Test Customer",
+      "customerPhone": "01700112233",
+      "customerAddress": "Dhanmondi, Dhaka",
+      "deliveryZoneId": "zone-1",
+      "deliveryZoneName": "Inside Dhaka",
+      "deliveryCharge": 70,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 3,
+          "unitPrice": 1450,
+          "costPrice": 1450,
+          "subtotal": 4350
+        }
+      ],
+      "subtotal": 4350,
+      "totalAmount": 4420,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "orderStatus": "CANCELLED",
+      "id": "NS-2610-7416",
+      "createdAt": "2026-10-30T15:23:10.841Z",
+      "updatedAt": "2026-10-30T15:23:10.847Z"
+    },
+    {
+      "orderType": "reseller_order",
+      "resellerId": "usr-1793197122473-vycu",
+      "resellerName": "Asif Karim",
+      "resellerPhone": "01799887766",
+      "customerName": "Valid Reseller Customer",
+      "customerPhone": "01711223344",
+      "customerAddress": "Mirpur-10, Dhaka",
+      "deliveryZoneId": "zone-1",
+      "deliveryZoneName": "Inside Dhaka",
+      "deliveryCharge": 70,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 2,
+          "unitPrice": 1400,
+          "costPrice": 1100,
+          "subtotal": 2800
+        }
+      ],
+      "subtotal": 2800,
+      "totalAmount": 2870,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "orderStatus": "COMPLETED",
+      "resellerAdvancePayment": {
+        "requiredAmount": 50,
+        "paidAmount": 50,
+        "method": "bkash",
+        "txId": "BK-1793373790764-ORD",
+        "status": "VERIFIED",
+        "verifiedAt": "2026-10-30T15:23:10.772Z",
+        "verifiedBy": "admin",
+        "adminNotes": "Advance ৳50 verified"
+      },
+      "id": "NS-2610-6789",
+      "createdAt": "2026-10-30T15:23:10.764Z",
+      "updatedAt": "2026-10-30T15:23:10.829Z"
+    },
+    {
+      "orderType": "direct_customer",
+      "customerName": "Cancel Test Customer",
+      "customerPhone": "01700112233",
+      "customerAddress": "Dhanmondi, Dhaka",
+      "deliveryZoneId": "zone-1",
+      "deliveryZoneName": "Inside Dhaka",
+      "deliveryCharge": 70,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 3,
+          "unitPrice": 1450,
+          "costPrice": 1450,
+          "subtotal": 4350
+        }
+      ],
+      "subtotal": 4350,
+      "totalAmount": 4420,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "orderStatus": "CANCELLED",
+      "id": "NS-2610-1751",
+      "createdAt": "2026-10-30T15:17:16.566Z",
+      "updatedAt": "2026-10-30T15:17:16.572Z"
+    },
+    {
+      "orderType": "reseller_order",
+      "resellerId": "usr-1793196617706-j8v5",
+      "resellerName": "Asif Karim",
+      "resellerPhone": "01799887766",
+      "customerName": "Valid Reseller Customer",
+      "customerPhone": "01711223344",
+      "customerAddress": "Mirpur-10, Dhaka",
+      "deliveryZoneId": "zone-1",
+      "deliveryZoneName": "Inside Dhaka",
+      "deliveryCharge": 70,
+      "items": [
+        {
+          "productId": "prod-101",
+          "productName": "Royal Semi-fitted Silk Panjabi with Embroidery",
+          "productImage": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=800&auto=format&fit=crop&q=80",
+          "quantity": 2,
+          "unitPrice": 1400,
+          "costPrice": 1100,
+          "subtotal": 2800
+        }
+      ],
+      "subtotal": 2800,
+      "totalAmount": 2870,
+      "paymentMethod": "cod",
+      "customerPaymentStatus": "PENDING",
+      "orderStatus": "COMPLETED",
+      "resellerAdvancePayment": {
+        "requiredAmount": 50,
+        "paidAmount": 50,
+        "method": "bkash",
+        "txId": "BK-1793373436518-ORD",
+        "status": "VERIFIED",
+        "verifiedAt": "2026-10-30T15:17:16.523Z",
+        "verifiedBy": "admin",
+        "adminNotes": "Advance ৳50 verified"
+      },
+      "id": "NS-2610-4845",
+      "createdAt": "2026-10-30T15:17:16.518Z",
+      "updatedAt": "2026-10-30T15:17:16.558Z"
+    },
     {
       "orderType": "direct_customer",
       "customerName": "Cancel Test Customer",
@@ -2394,8 +2813,8 @@
       "phone": "01700000000",
       "role": "admin",
       "status": "active",
-      "passwordHash": "e22367c35d85e68fa7fd2392ea5539a2bbe76732a176a61716ca5b353a95c6e46917ed3eb36dbec125892b530f997f739c46ef1c40320825ed48d6977f79253b",
-      "salt": "dd800b7a84ee41f7cdf4c062989978ec",
+      "passwordHash": "293ac55720363de4be89c6079708834188928c4a1637c1f7a65f686cf4677b03e2ed671978eb940538b8d2d4f58ac0a9b7254e8316e65fa2349f9212c0fcd0a7",
+      "salt": "fbe4a9f5801b5f6902c9871d9aa399a1",
       "createdAt": "2026-10-27T15:02:34.924Z",
       "referralCode": "NOVA-1115",
       "commissionBalance": 0,
@@ -2410,7 +2829,7 @@
       "email": "reseller@novashop.com",
       "phone": "01811223344",
       "role": "reseller",
-      "status": "archived",
+      "status": "active",
       "businessName": "Tanvir Fashion Hub (ঢাকা ড্রিম বাজার)",
       "registrationFeePaid": true,
       "registrationTxId": "BKASH9823412",
@@ -2440,9 +2859,11 @@
       "role": "reseller",
       "status": "pending_approval",
       "businessName": "Shakil Online Mart",
-      "registrationFeePaid": true,
+      "registrationFeePaid": false,
       "registrationTxId": "NAGAD5481920",
       "registrationMethod": "nagad",
+      "registrationSenderPhone": "01922334455",
+      "registrationFeeSnapshot": 200,
       "passwordHash": "656956d58013455b043eab4fa6a9e04f73cea5dc5ae35c1584cc5a974c1a2b33c95a04dc333053b575f24eaad24764dc1ec06e494e44fc368e9a0e36decf91e7",
       "salt": "a60150ef5e4c3bdd549b382b1fb1530f",
       "createdAt": "2026-10-27T15:02:34.924Z",
@@ -2451,7 +2872,7 @@
       "pendingCommission": 0,
       "reservedWithdrawal": 0,
       "totalWithdrawn": 0,
-      "regPaymentStatus": "APPROVED"
+      "regPaymentStatus": "PENDING_VERIFICATION"
     },
     {
       "id": "usr-1793113355137-jscv",
@@ -2653,7 +3074,7 @@
       "email": "asif-1793196617653@reseller.bd",
       "phone": "01799887766",
       "role": "reseller",
-      "status": "active",
+      "status": "archived",
       "businessName": "Karim Traders",
       "registrationFeePaid": true,
       "registrationTxId": "BK-1793196617653-REG",
@@ -2664,10 +3085,10 @@
       "regPaymentStatus": "APPROVED",
       "referralCode": "NOVA-7399",
       "referredBy": "NOVA-8484",
-      "commissionBalance": 0,
+      "commissionBalance": 1000,
       "pendingCommission": 0,
       "reservedWithdrawal": 0,
-      "totalWithdrawn": 0,
+      "totalWithdrawn": 600,
       "createdAt": "2026-10-28T14:10:17.706Z",
       "passwordHash": "83876f0688fd5c8121d674ce8b783e1f8b9632873e3ba1b9c58756c479ee0199d59ec223ca0b503011095606880641651a5cb481fd1d79a91b09154b5b4e2cc2",
       "salt": "16641ec90ac3b07e5188b1bfb1d156d7"
@@ -2678,7 +3099,7 @@
       "email": "asif-1793197122424@reseller.bd",
       "phone": "01799887766",
       "role": "reseller",
-      "status": "active",
+      "status": "archived",
       "businessName": "Karim Traders",
       "registrationFeePaid": true,
       "registrationTxId": "BK-1793197122424-REG",
@@ -2689,10 +3110,10 @@
       "regPaymentStatus": "APPROVED",
       "referralCode": "NOVA-3880",
       "referredBy": "NOVA-8472",
-      "commissionBalance": 0,
+      "commissionBalance": 1000,
       "pendingCommission": 0,
       "reservedWithdrawal": 0,
-      "totalWithdrawn": 0,
+      "totalWithdrawn": 600,
       "createdAt": "2026-10-28T14:18:42.473Z",
       "passwordHash": "8cf6fbb7bc6969f7da33ff0904ad30776d76c4391327df460a1344767d3185f13ff2c87b10a7f7f600cec29a5d9977860a3eaf5a57ce8e94f5f1ef07961f431d",
       "salt": "00f2ff6a7458cb5c4246b333dbd13380"
@@ -2703,7 +3124,7 @@
       "email": "asif-1793280772895@reseller.bd",
       "phone": "01799887766",
       "role": "reseller",
-      "status": "active",
+      "status": "archived",
       "businessName": "Karim Traders",
       "registrationFeePaid": true,
       "registrationTxId": "BK-1793280772895-REG",
@@ -2714,10 +3135,10 @@
       "regPaymentStatus": "APPROVED",
       "referralCode": "NOVA-4837",
       "referredBy": "NOVA-6499",
-      "commissionBalance": 0,
+      "commissionBalance": 1000,
       "pendingCommission": 0,
       "reservedWithdrawal": 0,
-      "totalWithdrawn": 0,
+      "totalWithdrawn": 600,
       "createdAt": "2026-10-29T13:32:52.944Z",
       "passwordHash": "974ee60cacc99db41f3b5da3434889b05459af68fd22f9b7bb5cde5177e43ccbf89c0eb99fbd1d7748281227b9d263fd19ef75469612a39387d776c0d7cbe8b7",
       "salt": "5327a8faa4c056ac6292f85ab126cbde"
@@ -2846,9 +3267,596 @@
       "createdAt": "2026-10-30T15:13:19.451Z",
       "passwordHash": "2f26c170b2a8c34e96809460ac03cc14caf6427aefedd2e00e893dd205dc5882731b8e32e076bd7f4e8968c567d9862e7a051b9fa9b1adf7b91ebe22fab8e041",
       "salt": "3cd3b3bb4309504587fb4fdd0c2c087d"
+    },
+    {
+      "id": "usr-1793373436488-9tmb",
+      "name": "Asif Karim",
+      "email": "asif-1793373436444@reseller.bd",
+      "phone": "01799887766",
+      "role": "reseller",
+      "status": "active",
+      "businessName": "Karim Traders",
+      "registrationFeePaid": true,
+      "registrationTxId": "BK-1793373436444-REG",
+      "registrationMethod": "bkash",
+      "registrationSenderPhone": "01799887766",
+      "registrationFeeSnapshot": 100,
+      "appliedReferralDiscount": 100,
+      "regPaymentStatus": "APPROVED",
+      "referralCode": "NOVA-1601",
+      "referredBy": "NOVA-7399",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 0,
+      "createdAt": "2026-10-30T15:17:16.488Z",
+      "passwordHash": "220b73d6fcf3842f65ef63f66f80d8da2eb743c31d7a2fad6369a1dbb5e4a092803396d501ea6c6938d5bc5ce5f79601735dd7b7220b5aabbcc89de36f535eff",
+      "salt": "040d591c4d95b09cf2dfa0be8d82347f"
+    },
+    {
+      "id": "usr-1793373790722-wdd6",
+      "name": "Asif Karim",
+      "email": "asif-1793373790664@reseller.bd",
+      "phone": "01799887766",
+      "role": "reseller",
+      "status": "active",
+      "businessName": "Karim Traders",
+      "registrationFeePaid": true,
+      "registrationTxId": "BK-1793373790664-REG",
+      "registrationMethod": "bkash",
+      "registrationSenderPhone": "01799887766",
+      "registrationFeeSnapshot": 100,
+      "appliedReferralDiscount": 100,
+      "regPaymentStatus": "APPROVED",
+      "referralCode": "NOVA-5622",
+      "referredBy": "NOVA-3880",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 0,
+      "createdAt": "2026-10-30T15:23:10.722Z",
+      "passwordHash": "5dc6d65a5cdbb021c6238a9c0c6f94146c5596d27381bd0ac1d09aea1b2b9bce9d1bf21ba722485aafd3c4033e67f999bff414f2a916a4ac910017a4347a1f50",
+      "salt": "b0730a0101493e1334e7eedee3e0735b"
+    },
+    {
+      "id": "usr-1793374662588-r3ln",
+      "name": "Asif Karim",
+      "email": "asif-1793374662542@reseller.bd",
+      "phone": "01799887766",
+      "role": "reseller",
+      "status": "active",
+      "businessName": "Karim Traders",
+      "registrationFeePaid": true,
+      "registrationTxId": "BK-1793374662542-REG",
+      "registrationMethod": "bkash",
+      "registrationSenderPhone": "01799887766",
+      "registrationFeeSnapshot": 100,
+      "appliedReferralDiscount": 100,
+      "regPaymentStatus": "APPROVED",
+      "referralCode": "NOVA-4559",
+      "referredBy": "NOVA-4837",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 0,
+      "createdAt": "2026-10-30T15:37:42.588Z",
+      "passwordHash": "196cbdd0f431c4ecbaa5d083ae85e2d783b471414a161c86fe515929355d3447c46c2ed94f5ff7d5b7ba079c36afc4b25b1b8d5df8546c7e56ad60d46c0174d9",
+      "salt": "d2f3cf8fc09afd23d85cf99c5812140a"
+    },
+    {
+      "id": "usr-1793375616799-xykk",
+      "name": "Rahim Mia",
+      "email": "rahim.test.1793375616702@test.com",
+      "phone": "01711223344",
+      "role": "reseller",
+      "status": "active",
+      "businessName": "Rahim Fashion BD",
+      "registrationFeePaid": true,
+      "registrationTxId": "TX75616702",
+      "registrationMethod": "bkash",
+      "registrationSenderPhone": "01711223344",
+      "registrationFeeSnapshot": 200,
+      "appliedReferralDiscount": 0,
+      "regPaymentStatus": "APPROVED",
+      "referralCode": "NOVA-3284",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 0,
+      "createdAt": "2026-10-30T15:53:36.799Z",
+      "passwordHash": "9264fec689896c99ecd70b8e2fae71f3f41489efb8760ccbd1d951055d414e5df6180173c6e55e11e472bf4e0ca1b4e70b177c8693291f891f2da96a17734b56",
+      "salt": "b61f17d1d14444e1672abce5f1091f59"
+    },
+    {
+      "id": "usr-1793445829181-hb2b",
+      "name": "কামাল উদ্দিন (Kamal)",
+      "email": "kamal_reseller_test@gmail.com",
+      "phone": "01755112233",
+      "role": "reseller",
+      "status": "pending_approval",
+      "businessName": "কামাল অনলাইন শপ",
+      "registrationFeePaid": false,
+      "registrationTxId": "BK99221144",
+      "registrationMethod": "bkash",
+      "registrationSenderPhone": "01755112233",
+      "registrationFeeSnapshot": 200,
+      "appliedReferralDiscount": 0,
+      "regPaymentStatus": "PENDING_VERIFICATION",
+      "referralCode": "NOVA-6346",
+      "commissionBalance": 0,
+      "pendingCommission": 0,
+      "reservedWithdrawal": 0,
+      "totalWithdrawn": 0,
+      "createdAt": "2026-10-31T11:23:49.181Z",
+      "passwordHash": "fa4a24b477cb99d5e83f80a24a9dfadeb5cbf48cf55bfe1bd6d3b01709a69e50ab02044fc630d30c4700dfd0be6761e8317903002ad09b8687306a3b760259d1",
+      "salt": "0c285a17217e1be07a15696f79e8ac87"
     }
   ],
   "auditLogs": [
+    {
+      "id": "aud-1793445829181-s5zg",
+      "action": "REGISTER_RESELLER",
+      "details": "Reseller registered: kamal_reseller_test@gmail.com (Referral: None)",
+      "timestamp": "2026-10-31T11:23:49.181Z"
+    },
+    {
+      "id": "aud-1793445822296-a3ud",
+      "userId": "usr-admin-1",
+      "userRole": "admin",
+      "action": "VERIFY_REGISTRATION_PAYMENT",
+      "details": "Approved registration payment for reseller rahim.test.1793375616702@test.com. Notes: Test approval verified",
+      "timestamp": "2026-10-31T11:23:42.296Z"
+    },
+    {
+      "id": "aud-1793375616800-8d7p",
+      "action": "REGISTER_RESELLER",
+      "details": "Reseller registered: rahim.test.1793375616702@test.com (Referral: None)",
+      "timestamp": "2026-10-30T15:53:36.800Z"
+    },
+    {
+      "id": "aud-1793374703994-d3nf",
+      "userId": "usr-admin-1",
+      "userRole": "admin",
+      "action": "CHANGE_PASSWORD",
+      "details": "User admin@novashop.com (admin) changed login password",
+      "timestamp": "2026-10-30T15:38:23.994Z"
+    },
+    {
+      "id": "aud-1793374703831-nrol",
+      "userId": "usr-admin-1",
+      "userRole": "admin",
+      "action": "CHANGE_PASSWORD",
+      "details": "User admin@novashop.com (admin) changed login password",
+      "timestamp": "2026-10-30T15:38:23.831Z"
+    },
+    {
+      "id": "aud-1793374662692-51et",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-3328 status changed to CANCELLED",
+      "timestamp": "2026-10-30T15:37:42.692Z"
+    },
+    {
+      "id": "aud-1793374662688-238v",
+      "action": "CREATE_ORDER",
+      "details": "New direct_customer placed: NS-2610-3328 by Cancel Test Customer (Total: ৳4420)",
+      "timestamp": "2026-10-30T15:37:42.688Z"
+    },
+    {
+      "id": "aud-1793374662682-bq8p",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "ARCHIVE_USER",
+      "details": "User Asif Karim (asif-1793280772895@reseller.bd) has financial history. Safely archived instead of hard-deleted to preserve ledger integrity.",
+      "timestamp": "2026-10-30T15:37:42.682Z"
+    },
+    {
+      "id": "aud-1793374662676-9495",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-4972 status changed to COMPLETED",
+      "timestamp": "2026-10-30T15:37:42.676Z"
+    },
+    {
+      "id": "aud-1793374662671-od1n",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-4972 status changed to DELIVERED",
+      "timestamp": "2026-10-30T15:37:42.671Z"
+    },
+    {
+      "id": "aud-1793374662668-u1gd",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "AUTO_CREDIT_RESELLER_PROFIT",
+      "details": "Order NS-2610-4972 marked DELIVERED: Generated and auto-credited profit ৳600 to reseller Asif Karim. Reference: PROFIT-AUTO-CREDIT-NS-2610-4972",
+      "timestamp": "2026-10-30T15:37:42.668Z"
+    },
+    {
+      "id": "aud-1793374662665-c12h",
+      "userRole": "admin",
+      "action": "DATABASE_RESTORE",
+      "details": "Database restored from backup archive",
+      "timestamp": "2026-10-30T15:37:42.665Z"
+    },
+    {
+      "id": "aud-1793374662646-pu2u",
+      "userRole": "admin",
+      "action": "IMPORT_CSV",
+      "details": "CSV import completed: 1 created, 0 updated",
+      "timestamp": "2026-10-30T15:37:42.646Z"
+    },
+    {
+      "id": "aud-1793374662642-05o1",
+      "userRole": "admin",
+      "action": "IMPORT_CSV",
+      "details": "CSV import completed: 1 created, 0 updated",
+      "timestamp": "2026-10-30T15:37:42.642Z"
+    },
+    {
+      "id": "aud-1793374662636-uby5",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-4972 status changed to SHIPPED",
+      "timestamp": "2026-10-30T15:37:42.636Z"
+    },
+    {
+      "id": "aud-1793374662626-dbpm",
+      "userRole": "admin",
+      "action": "VERIFY_ADVANCE_PAYMENT",
+      "details": "Verified advance payment for order NS-2610-4972. Notes: Advance ৳50 verified",
+      "timestamp": "2026-10-30T15:37:42.626Z"
+    },
+    {
+      "id": "aud-1793374662621-6oy7",
+      "action": "CREATE_ORDER",
+      "details": "New reseller_order placed: NS-2610-4972 by Valid Reseller Customer (Total: ৳2870)",
+      "timestamp": "2026-10-30T15:37:42.621Z"
+    },
+    {
+      "id": "aud-1793374662617-mxqo",
+      "userRole": "admin",
+      "action": "APPROVE_WITHDRAWAL",
+      "details": "Paid withdrawal ৳600 to Asif Karim via bkash. TrxID: TRX-PAYOUT-991",
+      "timestamp": "2026-10-30T15:37:42.617Z"
+    },
+    {
+      "id": "aud-1793374662612-7aud",
+      "action": "REQUEST_WITHDRAWAL",
+      "details": "Reseller Asif Karim requested withdrawal of ৳600 via bkash (01799887766)",
+      "timestamp": "2026-10-30T15:37:42.612Z"
+    },
+    {
+      "id": "aud-1793374662602-vca4",
+      "userRole": "admin",
+      "action": "VERIFY_REGISTRATION_PAYMENT",
+      "details": "Approved registration payment for reseller asif-1793374662542@reseller.bd. Notes: Payment confirmed",
+      "timestamp": "2026-10-30T15:37:42.602Z"
+    },
+    {
+      "id": "aud-1793374662601-07vf",
+      "userRole": "admin",
+      "action": "AUTO_CREDIT_REFERRAL_BONUS",
+      "details": "Auto-credited referral bonus ৳50 to referrer Asif Karim (asif-1793280772895@reseller.bd) on approval of reseller Asif Karim",
+      "timestamp": "2026-10-30T15:37:42.601Z"
+    },
+    {
+      "id": "aud-1793374662596-qiae",
+      "userRole": "admin",
+      "action": "APPROVE_REFERRAL_COMMISSION",
+      "details": "Approved commission ৳50 for reseller Asif Karim",
+      "timestamp": "2026-10-30T15:37:42.596Z"
+    },
+    {
+      "id": "aud-1793374662592-8zla",
+      "action": "CREATE_REFERRAL_COMMISSION",
+      "details": "Pending commission ৳50 created for referrer Asif Karim from Asif Karim",
+      "timestamp": "2026-10-30T15:37:42.592Z"
+    },
+    {
+      "id": "aud-1793374662588-xgad",
+      "action": "REGISTER_RESELLER",
+      "details": "Reseller registered: asif-1793374662542@reseller.bd (Referral: NOVA-4837)",
+      "timestamp": "2026-10-30T15:37:42.588Z"
+    },
+    {
+      "id": "aud-1793374662351-f8b1",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Store configuration settings updated persistently",
+      "timestamp": "2026-10-30T15:37:42.351Z"
+    },
+    {
+      "id": "aud-1793373790847-3tdi",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-7416 status changed to CANCELLED",
+      "timestamp": "2026-10-30T15:23:10.847Z"
+    },
+    {
+      "id": "aud-1793373790841-a0er",
+      "action": "CREATE_ORDER",
+      "details": "New direct_customer placed: NS-2610-7416 by Cancel Test Customer (Total: ৳4420)",
+      "timestamp": "2026-10-30T15:23:10.841Z"
+    },
+    {
+      "id": "aud-1793373790835-6qpn",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "ARCHIVE_USER",
+      "details": "User Asif Karim (asif-1793197122424@reseller.bd) has financial history. Safely archived instead of hard-deleted to preserve ledger integrity.",
+      "timestamp": "2026-10-30T15:23:10.835Z"
+    },
+    {
+      "id": "aud-1793373790829-tgdy",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-6789 status changed to COMPLETED",
+      "timestamp": "2026-10-30T15:23:10.829Z"
+    },
+    {
+      "id": "aud-1793373790824-cncr",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-6789 status changed to DELIVERED",
+      "timestamp": "2026-10-30T15:23:10.824Z"
+    },
+    {
+      "id": "aud-1793373790822-tjmq",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "AUTO_CREDIT_RESELLER_PROFIT",
+      "details": "Order NS-2610-6789 marked DELIVERED: Generated and auto-credited profit ৳600 to reseller Asif Karim. Reference: PROFIT-AUTO-CREDIT-NS-2610-6789",
+      "timestamp": "2026-10-30T15:23:10.822Z"
+    },
+    {
+      "id": "aud-1793373790820-i8xg",
+      "userRole": "admin",
+      "action": "DATABASE_RESTORE",
+      "details": "Database restored from backup archive",
+      "timestamp": "2026-10-30T15:23:10.820Z"
+    },
+    {
+      "id": "aud-1793373790799-ykac",
+      "userRole": "admin",
+      "action": "IMPORT_CSV",
+      "details": "CSV import completed: 1 created, 0 updated",
+      "timestamp": "2026-10-30T15:23:10.799Z"
+    },
+    {
+      "id": "aud-1793373790794-cmha",
+      "userRole": "admin",
+      "action": "IMPORT_CSV",
+      "details": "CSV import completed: 1 created, 0 updated",
+      "timestamp": "2026-10-30T15:23:10.794Z"
+    },
+    {
+      "id": "aud-1793373790779-4dn3",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-6789 status changed to SHIPPED",
+      "timestamp": "2026-10-30T15:23:10.779Z"
+    },
+    {
+      "id": "aud-1793373790772-pe6v",
+      "userRole": "admin",
+      "action": "VERIFY_ADVANCE_PAYMENT",
+      "details": "Verified advance payment for order NS-2610-6789. Notes: Advance ৳50 verified",
+      "timestamp": "2026-10-30T15:23:10.772Z"
+    },
+    {
+      "id": "aud-1793373790764-pplg",
+      "action": "CREATE_ORDER",
+      "details": "New reseller_order placed: NS-2610-6789 by Valid Reseller Customer (Total: ৳2870)",
+      "timestamp": "2026-10-30T15:23:10.764Z"
+    },
+    {
+      "id": "aud-1793373790756-c37k",
+      "userRole": "admin",
+      "action": "APPROVE_WITHDRAWAL",
+      "details": "Paid withdrawal ৳600 to Asif Karim via bkash. TrxID: TRX-PAYOUT-991",
+      "timestamp": "2026-10-30T15:23:10.756Z"
+    },
+    {
+      "id": "aud-1793373790751-5dtq",
+      "action": "REQUEST_WITHDRAWAL",
+      "details": "Reseller Asif Karim requested withdrawal of ৳600 via bkash (01799887766)",
+      "timestamp": "2026-10-30T15:23:10.751Z"
+    },
+    {
+      "id": "aud-1793373790740-bwb8",
+      "userRole": "admin",
+      "action": "VERIFY_REGISTRATION_PAYMENT",
+      "details": "Approved registration payment for reseller asif-1793373790664@reseller.bd. Notes: Payment confirmed",
+      "timestamp": "2026-10-30T15:23:10.740Z"
+    },
+    {
+      "id": "aud-1793373790738-aka6",
+      "userRole": "admin",
+      "action": "AUTO_CREDIT_REFERRAL_BONUS",
+      "details": "Auto-credited referral bonus ৳50 to referrer Asif Karim (asif-1793197122424@reseller.bd) on approval of reseller Asif Karim",
+      "timestamp": "2026-10-30T15:23:10.738Z"
+    },
+    {
+      "id": "aud-1793373790735-5yva",
+      "userRole": "admin",
+      "action": "APPROVE_REFERRAL_COMMISSION",
+      "details": "Approved commission ৳50 for reseller Asif Karim",
+      "timestamp": "2026-10-30T15:23:10.735Z"
+    },
+    {
+      "id": "aud-1793373790728-jrcr",
+      "action": "CREATE_REFERRAL_COMMISSION",
+      "details": "Pending commission ৳50 created for referrer Asif Karim from Asif Karim",
+      "timestamp": "2026-10-30T15:23:10.728Z"
+    },
+    {
+      "id": "aud-1793373790722-3h03",
+      "action": "REGISTER_RESELLER",
+      "details": "Reseller registered: asif-1793373790664@reseller.bd (Referral: NOVA-3880)",
+      "timestamp": "2026-10-30T15:23:10.722Z"
+    },
+    {
+      "id": "aud-1793373790420-v18r",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Store configuration settings updated persistently",
+      "timestamp": "2026-10-30T15:23:10.420Z"
+    },
+    {
+      "id": "aud-1793373750574-fdse",
+      "userId": "usr-admin-1",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Store configuration settings updated persistently",
+      "timestamp": "2026-10-30T15:22:30.574Z"
+    },
+    {
+      "id": "aud-1793373436572-cj6v",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-1751 status changed to CANCELLED",
+      "timestamp": "2026-10-30T15:17:16.572Z"
+    },
+    {
+      "id": "aud-1793373436566-w2ci",
+      "action": "CREATE_ORDER",
+      "details": "New direct_customer placed: NS-2610-1751 by Cancel Test Customer (Total: ৳4420)",
+      "timestamp": "2026-10-30T15:17:16.566Z"
+    },
+    {
+      "id": "aud-1793373436563-8yb9",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "ARCHIVE_USER",
+      "details": "User Asif Karim (asif-1793196617653@reseller.bd) has financial history. Safely archived instead of hard-deleted to preserve ledger integrity.",
+      "timestamp": "2026-10-30T15:17:16.563Z"
+    },
+    {
+      "id": "aud-1793373436558-yt2s",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-4845 status changed to COMPLETED",
+      "timestamp": "2026-10-30T15:17:16.558Z"
+    },
+    {
+      "id": "aud-1793373436554-mvqx",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-4845 status changed to DELIVERED",
+      "timestamp": "2026-10-30T15:17:16.554Z"
+    },
+    {
+      "id": "aud-1793373436552-va6w",
+      "userId": "admin",
+      "userRole": "admin",
+      "action": "AUTO_CREDIT_RESELLER_PROFIT",
+      "details": "Order NS-2610-4845 marked DELIVERED: Generated and auto-credited profit ৳600 to reseller Asif Karim. Reference: PROFIT-AUTO-CREDIT-NS-2610-4845",
+      "timestamp": "2026-10-30T15:17:16.552Z"
+    },
+    {
+      "id": "aud-1793373436550-k446",
+      "userRole": "admin",
+      "action": "DATABASE_RESTORE",
+      "details": "Database restored from backup archive",
+      "timestamp": "2026-10-30T15:17:16.550Z"
+    },
+    {
+      "id": "aud-1793373436536-mj39",
+      "userRole": "admin",
+      "action": "IMPORT_CSV",
+      "details": "CSV import completed: 1 created, 0 updated",
+      "timestamp": "2026-10-30T15:17:16.536Z"
+    },
+    {
+      "id": "aud-1793373436532-yz5e",
+      "userRole": "admin",
+      "action": "IMPORT_CSV",
+      "details": "CSV import completed: 1 created, 0 updated",
+      "timestamp": "2026-10-30T15:17:16.532Z"
+    },
+    {
+      "id": "aud-1793373436526-89tm",
+      "userRole": "admin",
+      "action": "UPDATE_ORDER_STATUS",
+      "details": "Order NS-2610-4845 status changed to SHIPPED",
+      "timestamp": "2026-10-30T15:17:16.526Z"
+    },
+    {
+      "id": "aud-1793373436523-dn1d",
+      "userRole": "admin",
+      "action": "VERIFY_ADVANCE_PAYMENT",
+      "details": "Verified advance payment for order NS-2610-4845. Notes: Advance ৳50 verified",
+      "timestamp": "2026-10-30T15:17:16.523Z"
+    },
+    {
+      "id": "aud-1793373436518-qd8d",
+      "action": "CREATE_ORDER",
+      "details": "New reseller_order placed: NS-2610-4845 by Valid Reseller Customer (Total: ৳2870)",
+      "timestamp": "2026-10-30T15:17:16.518Z"
+    },
+    {
+      "id": "aud-1793373436514-4fbx",
+      "userRole": "admin",
+      "action": "APPROVE_WITHDRAWAL",
+      "details": "Paid withdrawal ৳600 to Asif Karim via bkash. TrxID: TRX-PAYOUT-991",
+      "timestamp": "2026-10-30T15:17:16.514Z"
+    },
+    {
+      "id": "aud-1793373436510-eqeq",
+      "action": "REQUEST_WITHDRAWAL",
+      "details": "Reseller Asif Karim requested withdrawal of ৳600 via bkash (01799887766)",
+      "timestamp": "2026-10-30T15:17:16.510Z"
+    },
+    {
+      "id": "aud-1793373436504-bmw0",
+      "userRole": "admin",
+      "action": "VERIFY_REGISTRATION_PAYMENT",
+      "details": "Approved registration payment for reseller asif-1793373436444@reseller.bd. Notes: Payment confirmed",
+      "timestamp": "2026-10-30T15:17:16.504Z"
+    },
+    {
+      "id": "aud-1793373436500-1oib",
+      "userRole": "admin",
+      "action": "AUTO_CREDIT_REFERRAL_BONUS",
+      "details": "Auto-credited referral bonus ৳50 to referrer Asif Karim (asif-1793196617653@reseller.bd) on approval of reseller Asif Karim",
+      "timestamp": "2026-10-30T15:17:16.500Z"
+    },
+    {
+      "id": "aud-1793373436497-bjfr",
+      "userRole": "admin",
+      "action": "APPROVE_REFERRAL_COMMISSION",
+      "details": "Approved commission ৳50 for reseller Asif Karim",
+      "timestamp": "2026-10-30T15:17:16.497Z"
+    },
+    {
+      "id": "aud-1793373436494-1z83",
+      "action": "CREATE_REFERRAL_COMMISSION",
+      "details": "Pending commission ৳50 created for referrer Asif Karim from Asif Karim",
+      "timestamp": "2026-10-30T15:17:16.494Z"
+    },
+    {
+      "id": "aud-1793373436488-oq5t",
+      "action": "REGISTER_RESELLER",
+      "details": "Reseller registered: asif-1793373436444@reseller.bd (Referral: NOVA-7399)",
+      "timestamp": "2026-10-30T15:17:16.488Z"
+    },
+    {
+      "id": "aud-1793373436263-vher",
+      "userRole": "admin",
+      "action": "UPDATE_SETTINGS",
+      "details": "Store configuration settings updated persistently",
+      "timestamp": "2026-10-30T15:17:16.263Z"
+    },
     {
       "id": "aud-1793373199539-zchc",
       "userId": "admin",
@@ -4787,6 +5795,42 @@
   ],
   "referralCommissions": [
     {
+      "id": "comm-1793374662592-1kum",
+      "referrerId": "usr-1793280772944-5gjk",
+      "referrerName": "Asif Karim",
+      "referredUserId": "usr-1793374662588-r3ln",
+      "referredUserName": "Asif Karim",
+      "referralCode": "NOVA-4837",
+      "amount": 50,
+      "status": "APPROVED",
+      "createdAt": "2026-10-30T15:37:42.592Z",
+      "approvedAt": "2026-10-30T15:37:42.596Z"
+    },
+    {
+      "id": "comm-1793373790728-va32",
+      "referrerId": "usr-1793197122473-vycu",
+      "referrerName": "Asif Karim",
+      "referredUserId": "usr-1793373790722-wdd6",
+      "referredUserName": "Asif Karim",
+      "referralCode": "NOVA-3880",
+      "amount": 50,
+      "status": "APPROVED",
+      "createdAt": "2026-10-30T15:23:10.728Z",
+      "approvedAt": "2026-10-30T15:23:10.735Z"
+    },
+    {
+      "id": "comm-1793373436494-clii",
+      "referrerId": "usr-1793196617706-j8v5",
+      "referrerName": "Asif Karim",
+      "referredUserId": "usr-1793373436488-9tmb",
+      "referredUserName": "Asif Karim",
+      "referralCode": "NOVA-7399",
+      "amount": 50,
+      "status": "APPROVED",
+      "createdAt": "2026-10-30T15:17:16.494Z",
+      "approvedAt": "2026-10-30T15:17:16.497Z"
+    },
+    {
       "id": "comm-1793373199463-rfho",
       "referrerId": "usr-1793196466886-fg96",
       "referrerName": "Asif Karim",
@@ -4956,6 +6000,48 @@
     }
   ],
   "withdrawals": [
+    {
+      "id": "wdr-1793374662612-lp61",
+      "resellerId": "usr-1793280772944-5gjk",
+      "resellerName": "Asif Karim",
+      "resellerPhone": "01799887766",
+      "amount": 600,
+      "payoutMethod": "bkash",
+      "payoutNumber": "01799887766",
+      "status": "PAID",
+      "createdAt": "2026-10-30T15:37:42.612Z",
+      "txId": "TRX-PAYOUT-991",
+      "adminNotes": "bKash paid",
+      "processedAt": "2026-10-30T15:37:42.617Z"
+    },
+    {
+      "id": "wdr-1793373790751-2bnl",
+      "resellerId": "usr-1793197122473-vycu",
+      "resellerName": "Asif Karim",
+      "resellerPhone": "01799887766",
+      "amount": 600,
+      "payoutMethod": "bkash",
+      "payoutNumber": "01799887766",
+      "status": "PAID",
+      "createdAt": "2026-10-30T15:23:10.751Z",
+      "txId": "TRX-PAYOUT-991",
+      "adminNotes": "bKash paid",
+      "processedAt": "2026-10-30T15:23:10.756Z"
+    },
+    {
+      "id": "wdr-1793373436510-ul93",
+      "resellerId": "usr-1793196617706-j8v5",
+      "resellerName": "Asif Karim",
+      "resellerPhone": "01799887766",
+      "amount": 600,
+      "payoutMethod": "bkash",
+      "payoutNumber": "01799887766",
+      "status": "PAID",
+      "createdAt": "2026-10-30T15:17:16.510Z",
+      "txId": "TRX-PAYOUT-991",
+      "adminNotes": "bKash paid",
+      "processedAt": "2026-10-30T15:17:16.514Z"
+    },
     {
       "id": "wdr-1793373199483-lg2a",
       "resellerId": "usr-1793196466886-fg96",
@@ -5155,6 +6241,14 @@
   ],
   "emailLogs": [
     {
+      "id": "log-1793375616805-s5tw",
+      "to": "support@novashop.bd",
+      "subject": "[NOVA SHOP] নতুন রিসেলার আবেদন: Rahim Mia",
+      "event": "resellerRegistration",
+      "status": "SENT",
+      "timestamp": "2026-10-30T15:53:36.805Z"
+    },
+    {
       "id": "log-1793283852702-onsg",
       "to": "support@novashop.bd",
       "subject": "[NOVA SHOP] নতুন কাস্টমার অর্ডার #NS-2610-3856",
@@ -5180,6 +6274,63 @@
     }
   ],
   "resellerProfits": [
+    {
+      "id": "prof-NS-2610-4972",
+      "orderId": "NS-2610-4972",
+      "resellerId": "usr-1793280772944-5gjk",
+      "resellerName": "Asif Karim",
+      "resellerPhone": "01799887766",
+      "customerName": "Valid Reseller Customer",
+      "sellingTotal": 2800,
+      "wholesaleTotal": 2200,
+      "profitAmount": 600,
+      "deductions": 0,
+      "netProfit": 600,
+      "status": "APPROVED",
+      "approvedAt": "2026-10-30T15:37:42.668Z",
+      "approvedBy": "admin",
+      "adminNotes": "Auto-credited upon order completion",
+      "createdAt": "2026-10-30T15:37:42.668Z",
+      "updatedAt": "2026-10-30T15:37:42.668Z"
+    },
+    {
+      "id": "prof-NS-2610-6789",
+      "orderId": "NS-2610-6789",
+      "resellerId": "usr-1793197122473-vycu",
+      "resellerName": "Asif Karim",
+      "resellerPhone": "01799887766",
+      "customerName": "Valid Reseller Customer",
+      "sellingTotal": 2800,
+      "wholesaleTotal": 2200,
+      "profitAmount": 600,
+      "deductions": 0,
+      "netProfit": 600,
+      "status": "APPROVED",
+      "approvedAt": "2026-10-30T15:23:10.822Z",
+      "approvedBy": "admin",
+      "adminNotes": "Auto-credited upon order completion",
+      "createdAt": "2026-10-30T15:23:10.822Z",
+      "updatedAt": "2026-10-30T15:23:10.822Z"
+    },
+    {
+      "id": "prof-NS-2610-4845",
+      "orderId": "NS-2610-4845",
+      "resellerId": "usr-1793196617706-j8v5",
+      "resellerName": "Asif Karim",
+      "resellerPhone": "01799887766",
+      "customerName": "Valid Reseller Customer",
+      "sellingTotal": 2800,
+      "wholesaleTotal": 2200,
+      "profitAmount": 600,
+      "deductions": 0,
+      "netProfit": 600,
+      "status": "APPROVED",
+      "approvedAt": "2026-10-30T15:17:16.552Z",
+      "approvedBy": "admin",
+      "adminNotes": "Auto-credited upon order completion",
+      "createdAt": "2026-10-30T15:17:16.552Z",
+      "updatedAt": "2026-10-30T15:17:16.552Z"
+    },
     {
       "id": "prof-NS-2610-6683",
       "orderId": "NS-2610-6683",

@@ -75,6 +75,13 @@ function requireReseller(req: AuthRequest, res: Response, next: NextFunction) {
   next();
 }
 
+function requireAuth(req: AuthRequest, res: Response, next: NextFunction) {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Authentication required' });
+  }
+  next();
+}
+
 // ==========================================
 // API ROUTES
 // ==========================================
@@ -470,6 +477,34 @@ app.get('/api/auth/me', (req: AuthRequest, res: Response) => {
   }
   const { passwordHash: _ph, salt: _s, ...cleanUser } = user;
   res.json(cleanUser);
+});
+
+// Admin Password Change Endpoint
+app.post('/api/admin/change-password', requireAdmin, (req: AuthRequest, res: Response) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'বর্তমান পাসওয়ার্ড এবং নতুন পাসওয়ার্ড প্রদান করুন।' });
+    }
+    const result = db.changeUserPassword(req.user!.userId, currentPassword, newPassword, req.user!.userId);
+    res.json(result);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message || 'পাসওয়ার্ড পরিবর্তনে ব্যর্থ হয়েছে।' });
+  }
+});
+
+// Authenticated User Password Change Endpoint
+app.post('/api/auth/change-password', requireAuth, (req: AuthRequest, res: Response) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'বর্তমান পাসওয়ার্ড এবং নতুন পাসওয়ার্ড প্রদান করুন।' });
+    }
+    const result = db.changeUserPassword(req.user!.userId, currentPassword, newPassword, req.user!.userId);
+    res.json(result);
+  } catch (err: any) {
+    res.status(400).json({ error: err.message || 'পাসওয়ার্ড পরিবর্তনে ব্যর্থ হয়েছে।' });
+  }
 });
 
 // --- Customer Order Placement (Guest or Direct) ---
@@ -945,6 +980,14 @@ app.patch('/api/admin/orders/:id/status', requireAdmin, (req: AuthRequest, res: 
 // --- Admin Resellers & Registration Payment Verification ---
 app.get('/api/admin/resellers', requireAdmin, (req: AuthRequest, res: Response) => {
   const users = db.getUsers().filter((u) => u.role === 'reseller');
+  // Sort: Pending applications first, then by newest registration date
+  users.sort((a, b) => {
+    const aPending = a.status === 'pending_approval' || a.regPaymentStatus === 'PENDING_VERIFICATION';
+    const bPending = b.status === 'pending_approval' || b.regPaymentStatus === 'PENDING_VERIFICATION';
+    if (aPending && !bPending) return -1;
+    if (!aPending && bPending) return 1;
+    return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
+  });
   res.json(users);
 });
 
@@ -1115,7 +1158,7 @@ app.get('/api/admin/stats', requireAdmin, (req: AuthRequest, res: Response) => {
   ).length;
 
   const pendingResellerApprovals = users.filter(
-    (u) => u.role === 'reseller' && (u.status === 'pending_approval' || u.regPaymentStatus === 'PENDING_VERIFICATION')
+    (u) => u.role === 'reseller' && u.status !== 'archived' && (u.status === 'pending_approval' || u.regPaymentStatus === 'PENDING_VERIFICATION')
   ).length;
 
   const pendingWithdrawalsCount = withdrawals.filter((w) => w.status === 'PENDING').length;

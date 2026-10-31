@@ -1746,6 +1746,46 @@ class Database {
     };
   }
 
+  // --- Password Change Management ---
+  public changeUserPassword(
+    userId: string,
+    currentPass: string,
+    newPass: string,
+    adminId?: string
+  ): { success: boolean; message: string } {
+    const user = this.data.users.find((u) => u.id === userId);
+    if (!user) {
+      throw new Error('ব্যবহারকারী অ্যাকাউন্ট পাওয়া যায়নি।');
+    }
+
+    if (!newPass || newPass.trim().length < 6) {
+      throw new Error('নতুন পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।');
+    }
+
+    // Verify current password
+    const valid = verifyPassword(currentPass, user.passwordHash, user.salt);
+    if (!valid) {
+      throw new Error('বর্তমান পাসওয়ার্ডটি সঠিক নয়। অনুগ্রহ করে আপনার সঠিক বর্তমান পাসওয়ার্ড দিন।');
+    }
+
+    const { hash, salt } = hashPassword(newPass.trim());
+    user.passwordHash = hash;
+    user.salt = salt;
+
+    this.logAudit(
+      'CHANGE_PASSWORD',
+      `User ${user.email} (${user.role}) changed login password`,
+      adminId || userId,
+      user.role
+    );
+    this.save();
+
+    return {
+      success: true,
+      message: 'পাসওয়ার্ড সফলভাবে পরিবর্তন ও ডাটাবেজে সংরক্ষণ করা হয়েছে।',
+    };
+  }
+
   // --- CSV Import / Export ---
   public exportProductsCSV(): string {
     const headers = [
