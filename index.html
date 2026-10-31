@@ -5,52 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script>
       (function() {
-        // Intercept WebSocket creation for Vite dev HMR to avoid unhandled closure in iFrame sandbox
-        if (typeof window !== 'undefined' && window.WebSocket) {
-          const OrigWebSocket = window.WebSocket;
-          window.WebSocket = function(url, protocols) {
-            try {
-              const ws = new OrigWebSocket(url, protocols);
-              ws.addEventListener('error', function(e) {
-                // Ignore Vite dev HMR websocket errors cleanly
-                if (typeof url === 'string' && (url.includes('vite') || url.includes('@vite'))) {
-                  e.stopImmediatePropagation?.();
-                }
-              });
-              return ws;
-            } catch (err) {
-              return {
-                addEventListener: function() {},
-                removeEventListener: function() {},
-                send: function() {},
-                close: function() {},
-              };
-            }
-          };
-          window.WebSocket.prototype = OrigWebSocket.prototype;
-          window.WebSocket.CONNECTING = OrigWebSocket.CONNECTING;
-          window.WebSocket.OPEN = OrigWebSocket.OPEN;
-          window.WebSocket.CLOSING = OrigWebSocket.CLOSING;
-          window.WebSocket.CLOSED = OrigWebSocket.CLOSED;
-        }
-
         const origError = console.error;
         console.error = function(...args) {
           const msg = args.map(a => (a && (a.message || a.stack)) || String(a)).join(' ');
-          if (msg.includes('WebSocket closed without opened') || msg.includes('@vite/client')) {
+          if (msg.includes('WebSocket') || msg.includes('@vite/client') || msg.includes('ws:')) {
             return;
           }
           origError.apply(console, args);
         };
         window.addEventListener('error', function(e) {
-          if (e.message && e.message.includes('WebSocket closed without opened')) {
+          const errStr = (e.message || (e.error && (e.error.message || e.error.stack))) || '';
+          if (errStr.includes('WebSocket') || errStr.includes('@vite/client')) {
             e.preventDefault();
             e.stopImmediatePropagation();
+            return true;
           }
         }, true);
         window.addEventListener('unhandledrejection', function(e) {
           const reasonStr = (e.reason && (e.reason.message || e.reason.stack || String(e.reason))) || '';
-          if (reasonStr.includes('WebSocket closed without opened') || reasonStr.includes('@vite/client')) {
+          if (reasonStr.includes('WebSocket') || reasonStr.includes('@vite/client')) {
             e.preventDefault();
             e.stopImmediatePropagation();
           }

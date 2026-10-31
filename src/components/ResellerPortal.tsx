@@ -105,6 +105,8 @@ export const ResellerPortal: React.FC<ResellerPortalProps> = ({
   const [advanceTxId, setAdvanceTxId] = useState('');
   const [copiedPayment, setCopiedPayment] = useState(false);
   const [copiedRefCode, setCopiedRefCode] = useState(false);
+  const [copiedShareLink, setCopiedShareLink] = useState(false);
+  const [copiedProductId, setCopiedProductId] = useState<string | null>(null);
 
   // Profit Calculator Modal / Drawer State
   const [calcProduct, setCalcProduct] = useState<Product | null>(null);
@@ -405,6 +407,35 @@ export const ResellerPortal: React.FC<ResellerPortalProps> = ({
       `Nova Shop রিসেলার প্ল্যাটফর্মে জয়েন করুন এবং ঘরে বসেই পাইকারি রেটে পণ্য বিক্রি করে আয় করুন! রেজিস্ট্রেশন করার সময় আমার রেফারেল কোড "${code}" ব্যবহার করলে পেয়ে যাবেন ৫০% ছাড়! ভিজিট করুন: ${window.location.origin}`
     );
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+  };
+
+  const handleCopyShareLink = (code: string) => {
+    const link = `${window.location.origin}/?ref=${encodeURIComponent(code)}`;
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(link);
+    }
+    setCopiedShareLink(true);
+    setSuccessMsg(lang === 'bn' ? 'রেফারেল লিংক কপি হয়েছে!' : 'Referral link copied to clipboard!');
+    setTimeout(() => setCopiedShareLink(false), 2500);
+  };
+
+  const handleCopyProductInfo = (product: Product) => {
+    const text = `🛍️ ${product.banglaName || product.name}
+💰 বিক্রয় মূল্য: ৳${product.shopPrice}
+🏷️ প্রোডাক্ট কোড (SKU): ${product.sku}
+
+📝 বিবরণ:
+${product.banglaDescription || product.description || '১০০% অরিজিনাল কোয়ালিটি পণ্য।'}
+
+🚚 সারাদেশে হোম ডেলিভারি ও ক্যাশ অন ডেলিভারি সুবিধা!
+অর্ডার করতে ইনবক্স করুন।`;
+
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(text);
+    }
+    setCopiedProductId(product.id);
+    setSuccessMsg(lang === 'bn' ? `'${product.banglaName || product.name}'-এর তথ্য কপি হয়েছে! ফেসবুকে পোস্ট করতে পারেন।` : 'Product details copied to clipboard!');
+    setTimeout(() => setCopiedProductId(null), 2500);
   };
 
   // Filter products for catalog
@@ -918,185 +949,353 @@ export const ResellerPortal: React.FC<ResellerPortalProps> = ({
         ) : (
           /* VIEW 3: Active Approved Reseller Dashboard (Tabs) */
           <div>
-            {/* Reseller Quick Stats Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
-              <div className="clay-card p-4 bg-white rounded-2xl flex items-center justify-between">
-                <div>
-                  <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    {lang === 'bn' ? 'উপলব্ধ ওয়ালেট ব্যালেন্স' : 'Available Balance'}
+            {/* Executive Reseller Welcome & Profile Banner */}
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 border border-emerald-500/30 p-5 sm:p-6 mb-6 text-white shadow-xl">
+              {/* Background ambient lighting */}
+              <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-emerald-500/15 blur-3xl pointer-events-none" />
+              <div className="absolute -left-10 -bottom-10 w-48 h-48 rounded-full bg-teal-500/10 blur-3xl pointer-events-none" />
+
+              <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 text-slate-950 flex items-center justify-center font-black text-2xl shadow-lg shadow-emerald-500/20 shrink-0">
+                    {((currentUser?.businessName || currentUser?.name || 'R').slice(0, 2)).toUpperCase()}
                   </div>
-                  <div className="text-xl sm:text-2xl font-black text-emerald-600 mt-0.5">
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h2 className="text-base sm:text-lg font-black tracking-tight text-white">
+                        {currentUser?.businessName || currentUser?.name}
+                      </h2>
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>ভেরিফাইড অফিসিয়াল রিসেলার</span>
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-300 mt-1 flex items-center gap-3 flex-wrap">
+                      <span>📞 {currentUser?.phone}</span>
+                      <span>•</span>
+                      <span>✉️ {currentUser?.email}</span>
+                      {currentUser?.businessName && <span>• 🏢 {currentUser.businessName}</span>}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Referral Code Quick Copy Box & Direct Wallet Cashout */}
+                <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+                  <div className="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl px-3.5 py-2 flex items-center justify-between gap-3 text-xs w-full sm:w-auto">
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-slate-300 block leading-tight">আপনার রেফারেল কোড</span>
+                      <span className="font-mono font-black text-emerald-300 text-sm">{currentUser?.referralCode || 'NOVA-1001'}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => handleCopyRefCode(currentUser?.referralCode || '')}
+                        className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
+                        title="কোড কপি করুন"
+                      >
+                        {copiedRefCode ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleCopyShareLink(currentUser?.referralCode || '')}
+                        className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition cursor-pointer"
+                        title="ইনভাইট লিংক কপি করুন"
+                      >
+                        {copiedShareLink ? <Check className="w-4 h-4 text-emerald-400" /> : <Share2 className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('wallet')}
+                    className="w-full sm:w-auto px-4 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-600 hover:to-teal-500 text-slate-950 font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 transition active:scale-95 cursor-pointer whitespace-nowrap"
+                  >
+                    <Wallet className="w-4 h-4" />
+                    <span>টাকা উত্তোলন (ক্যাশআউট)</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Fast Reselling 4-Step Flow Guidance Pills */}
+              <div className="mt-5 pt-4 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-[11px] text-slate-200">
+                <div className="flex items-center gap-2 bg-white/5 rounded-xl p-2 border border-white/5">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/30 text-emerald-300 font-bold text-xs flex items-center justify-center shrink-0">১</span>
+                  <span className="line-clamp-1">পাইকারি রেটে পণ্য পছন্দ করুন</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/5 rounded-xl p-2 border border-white/5">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/30 text-emerald-300 font-bold text-xs flex items-center justify-center shrink-0">২</span>
+                  <span className="line-clamp-1">নিজের লাভে সেল করুন</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/5 rounded-xl p-2 border border-white/5">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/30 text-emerald-300 font-bold text-xs flex items-center justify-center shrink-0">৩</span>
+                  <span className="line-clamp-1">অগ্রিম ডেলিভারি ফি দিয়ে অর্ডার</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/5 rounded-xl p-2 border border-white/5">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/30 text-emerald-300 font-bold text-xs flex items-center justify-center shrink-0">৪</span>
+                  <span className="line-clamp-1">ডেলিভারিতে অটো লাভ ওয়ালেটে</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Reseller Quick Stats Bar (Luxury 4-Cards Grid) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
+              {/* Card 1: Available Balance */}
+              <div
+                onClick={() => setActiveTab('wallet')}
+                className="clay-card p-4 sm:p-5 bg-white rounded-3xl border border-emerald-100/80 shadow-sm flex flex-col justify-between hover:shadow-md transition cursor-pointer group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
+                    {lang === 'bn' ? 'উপলব্ধ ওয়ালেট ব্যালেন্স' : 'Available Balance'}
+                  </span>
+                  <div className="w-9 h-9 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition">
+                    <Wallet className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <div className="text-xl sm:text-2xl font-black text-emerald-600 leading-tight">
                     ৳{referralsData?.commissionBalance || 0}
                   </div>
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                  <Wallet className="w-5 h-5" />
-                </div>
-              </div>
-
-              <div className="clay-card p-4 bg-white rounded-2xl flex items-center justify-between">
-                <div>
-                  <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    {lang === 'bn' ? 'পেন্ডিং কমিশন' : 'Pending Commission'}
-                  </div>
-                  <div className="text-xl sm:text-2xl font-black text-amber-600 mt-0.5">
-                    ৳{referralsData?.pendingCommission || 0}
-                  </div>
-                </div>
-                <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
-                  <Clock className="w-5 h-5" />
+                  <span className="text-[10px] text-emerald-700 font-bold mt-1 inline-block">
+                    ✓ ক্যাশআউট করার জন্য প্রস্তুত
+                  </span>
                 </div>
               </div>
 
-              <div className="clay-card p-4 bg-white rounded-2xl flex items-center justify-between">
-                <div>
-                  <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    {lang === 'bn' ? 'মোট অর্ডার' : 'Total Orders'}
-                  </div>
-                  <div className="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">
-                    {resellerStats?.totalOrders || resellerOrders.length}
+              {/* Card 2: Pending Commission / Profit */}
+              <div
+                onClick={() => setActiveTab('my-orders')}
+                className="clay-card p-4 sm:p-5 bg-white rounded-3xl border border-amber-100/80 shadow-sm flex flex-col justify-between hover:shadow-md transition cursor-pointer group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
+                    {lang === 'bn' ? 'পেন্ডিং প্রত্যাশিত লাভ' : 'Pending Profit'}
+                  </span>
+                  <div className="w-9 h-9 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition">
+                    <Clock className="w-4 h-4" />
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
-                  <Package className="w-5 h-5" />
+                <div className="mt-2">
+                  <div className="text-xl sm:text-2xl font-black text-amber-600 leading-tight">
+                    ৳{resellerStats?.pendingProfit || referralsData?.pendingCommission || 0}
+                  </div>
+                  <span className="text-[10px] text-amber-700 font-bold mt-1 inline-block">
+                    ⏳ ডেলিভারির পর ব্যালেন্সে যোগ হবে
+                  </span>
                 </div>
               </div>
 
-              <div className="clay-card p-4 bg-white rounded-2xl flex items-center justify-between">
-                <div>
-                  <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                    {lang === 'bn' ? 'সফল ডেলিভারি' : 'Delivered'}
-                  </div>
-                  <div className="text-xl sm:text-2xl font-black text-emerald-600 mt-0.5">
-                    {resellerStats?.deliveredOrders || 0}
+              {/* Card 3: Total Reseller Orders */}
+              <div
+                onClick={() => setActiveTab('my-orders')}
+                className="clay-card p-4 sm:p-5 bg-white rounded-3xl border border-indigo-100/80 shadow-sm flex flex-col justify-between hover:shadow-md transition cursor-pointer group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
+                    {lang === 'bn' ? 'মোট সম্পন্ন অর্ডার' : 'Total Orders'}
+                  </span>
+                  <div className="w-9 h-9 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-110 transition">
+                    <Package className="w-4 h-4" />
                   </div>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center font-bold">
-                  <CheckCircle2 className="w-5 h-5" />
+                <div className="mt-2">
+                  <div className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
+                    {resellerStats?.totalOrders || resellerOrders.length} <span className="text-sm font-bold text-slate-400">টি</span>
+                  </div>
+                  <span className="text-[10px] text-indigo-700 font-bold mt-1 inline-block">
+                    সফল ডেলিভারি: {resellerStats?.deliveredOrders || 0} টি
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 4: Total Lifetime Withdrawn */}
+              <div
+                onClick={() => setActiveTab('wallet')}
+                className="clay-card p-4 sm:p-5 bg-white rounded-3xl border border-teal-100/80 shadow-sm flex flex-col justify-between hover:shadow-md transition cursor-pointer group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">
+                    {lang === 'bn' ? 'মোট উত্তোলিত আয়' : 'Total Withdrawn'}
+                  </span>
+                  <div className="w-9 h-9 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center group-hover:scale-110 transition">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <div className="text-xl sm:text-2xl font-black text-teal-800 leading-tight">
+                    ৳{currentUser?.totalWithdrawn || 0}
+                  </div>
+                  <span className="text-[10px] text-teal-700 font-bold mt-1 inline-block">
+                    ✓ লাইফটাইম মোট ক্যাশআউট
+                  </span>
                 </div>
               </div>
             </div>
 
             {/* TAB 1: WHOLESALE CATALOG */}
-            {activeTab === 'catalog' && (
-              <div className="space-y-4">
-                {/* Search & Category Filter */}
-                <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row gap-3 items-center justify-between">
-                  <div className="relative w-full sm:w-72">
-                    <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                    <input
-                      type="text"
-                      value={catalogSearch}
-                      onChange={(e) => setCatalogSearch(e.target.value)}
-                      placeholder={lang === 'bn' ? 'পণ্য বা SKU দিয়ে খুঁজুন...' : 'Search products or SKU...'}
-                      className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 outline-hidden"
-                    />
+            {activeTab === 'catalog' && (() => {
+              const dynamicCategories = [
+                { slug: 'all', label: 'সকল পণ্য' },
+                ...Array.from(new Set(products.map((p) => p.category)))
+                  .filter(Boolean)
+                  .map((slug) => {
+                    let label = slug;
+                    if (slug === 'mens-fashion') label = 'মেনস ফ্যাশন';
+                    else if (slug === 'womens-collection') label = 'ওমেনস কালেকশন';
+                    else if (slug === 'electronics') label = 'ইলেকট্রনিক্স';
+                    else if (slug === 'traditional-wear') label = 'ঐতিহ্যবাহী পোশাক';
+                    else if (slug === 'accessories') label = 'ব্যাগ ও এক্সেসরিজ';
+                    return { slug, label };
+                  }),
+              ];
+
+              return (
+                <div className="space-y-4">
+                  {/* Search & Dynamic Category Filter Bar */}
+                  <div className="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/90 shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
+                    <div className="relative w-full sm:w-80">
+                      <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="text"
+                        value={catalogSearch}
+                        onChange={(e) => setCatalogSearch(e.target.value)}
+                        placeholder={lang === 'bn' ? 'নাম বা SKU দিয়ে পাইকারি পণ্য খুঁজুন...' : 'Search products or SKU...'}
+                        className="w-full pl-9 pr-8 py-2.5 text-xs sm:text-sm rounded-2xl border border-slate-200 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500/20 bg-slate-50 font-medium text-slate-800"
+                      />
+                      {catalogSearch && (
+                        <button
+                          type="button"
+                          onClick={() => setCatalogSearch('')}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+                      {dynamicCategories.map((cat) => (
+                        <button
+                          key={cat.slug}
+                          onClick={() => setCatalogCategory(cat.slug)}
+                          className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap cursor-pointer transition ${
+                            catalogCategory === cat.slug
+                              ? 'bg-emerald-700 text-white shadow-md shadow-emerald-700/20'
+                              : 'bg-slate-100 hover:bg-slate-200/80 text-slate-700'
+                          }`}
+                        >
+                          {cat.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
-                    <button
-                      onClick={() => setCatalogCategory('all')}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap cursor-pointer transition ${
-                        catalogCategory === 'all'
-                          ? 'bg-slate-900 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                      }`}
-                    >
-                      {lang === 'bn' ? 'সকল পণ্য' : 'All Products'}
-                    </button>
-                    {['mens-fashion', 'womens-collection', 'electronics', 'traditional-wear', 'accessories'].map((cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => setCatalogCategory(cat)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap cursor-pointer transition ${
-                          catalogCategory === cat
-                            ? 'bg-slate-900 text-white'
-                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                        }`}
-                      >
-                        {cat === 'mens-fashion' ? 'মেনস ফ্যাশন' : cat === 'womens-collection' ? 'ওমেনস কালেকশন' : cat === 'electronics' ? 'ইলেকট্রনিক্স' : cat === 'traditional-wear' ? 'ঐতিহ্যবাহী' : 'ব্যাগ/এক্সেসরিজ'}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                  {/* Products Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {filteredProducts.map((p) => {
+                      const wholesaleCost = p.resellerPrice;
+                      const defaultSelling = p.shopPrice;
+                      const maxAllowed = p.resellerMaxPrice || Math.round(wholesaleCost * 1.6);
+                      const estimatedProfit = defaultSelling - wholesaleCost;
 
-                {/* Products Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {filteredProducts.map((p) => {
-                    const wholesaleCost = p.resellerPrice;
-                    const defaultSelling = p.shopPrice;
-                    const maxAllowed = p.resellerMaxPrice || Math.round(wholesaleCost * 1.6);
-                    const estimatedProfit = defaultSelling - wholesaleCost;
-
-                    return (
-                      <div
-                        key={p.id}
-                        className="clay-card bg-white rounded-2xl overflow-hidden border border-slate-100 flex flex-col justify-between hover:shadow-lg transition-all duration-300"
-                      >
-                        <div>
-                          <div className="relative aspect-4/3 overflow-hidden bg-slate-100">
-                            <img
-                              src={p.images[0] || 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&q=80'}
-                              alt={p.name}
-                              className="w-full h-full object-cover"
-                              loading="lazy"
-                            />
-                            <div className="absolute top-2 left-2 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-xs">
-                              {lang === 'bn' ? 'পাইকারি রেট' : 'Wholesale'}
+                      return (
+                        <div
+                          key={p.id}
+                          className="clay-card bg-white rounded-3xl overflow-hidden border border-slate-200/80 flex flex-col justify-between hover:shadow-xl transition-all duration-300 group"
+                        >
+                          <div>
+                            <div className="relative aspect-4/3 overflow-hidden bg-slate-100 rounded-t-3xl">
+                              <img
+                                src={p.images[0] || 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&q=80'}
+                                alt={p.name}
+                                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                                loading="lazy"
+                              />
+                              <div className="absolute top-2.5 left-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[10px] font-black px-2.5 py-1 rounded-xl shadow-md">
+                                {lang === 'bn' ? '🏷️ পাইকারি রেট' : 'Wholesale'}
+                              </div>
+                              <div className="absolute top-2.5 right-2.5 bg-slate-900/85 backdrop-blur-xs text-white text-[10px] px-2.5 py-1 rounded-xl font-mono font-bold">
+                                SKU: {p.sku}
+                              </div>
                             </div>
-                            <div className="absolute top-2 right-2 bg-slate-900/80 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded-md font-mono">
-                              SKU: {p.sku}
+
+                            <div className="p-4 sm:p-5">
+                              <h3 className="font-black text-sm sm:text-base text-slate-900 line-clamp-1 group-hover:text-emerald-700 transition">
+                                {p.banglaName || p.name}
+                              </h3>
+                              <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-1">{p.name}</p>
+
+                              {/* 3-Tier Pricing Breakdown */}
+                              <div className="mt-3.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-100/90 space-y-2 text-xs">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-slate-500 font-medium">{lang === 'bn' ? 'পাইকারি খরচ (আপনার রেট):' : 'Wholesale Cost:'}</span>
+                                  <span className="font-black text-emerald-700 text-base">৳{wholesaleCost}</span>
+                                </div>
+                                <div className="flex items-center justify-between text-[11px]">
+                                  <span className="text-slate-500">{lang === 'bn' ? 'খুচরা শপ বিক্রয় মূল্য:' : 'Retail Shop Price:'}</span>
+                                  <span className="font-bold text-slate-800">৳{p.shopPrice}</span>
+                                </div>
+                                <div className="flex items-center justify-between text-[11px]">
+                                  <span className="text-slate-500">{lang === 'bn' ? 'সর্বোচ্চ বিক্রয় সীমা:' : 'Max Allowed Price:'}</span>
+                                  <span className="font-semibold text-slate-600">৳{maxAllowed}</span>
+                                </div>
+                                <div className="pt-2 border-t border-slate-200/80 flex items-center justify-between">
+                                  <span className="text-xs font-bold text-slate-700">{lang === 'bn' ? 'আপনার সম্ভাব্য লাভ:' : 'Est. Profit:'}</span>
+                                  <span className="text-xs font-black text-emerald-600 bg-emerald-100/80 px-2 py-0.5 rounded-lg">
+                                    + ৳{estimatedProfit} / পিস
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
 
-                          <div className="p-4">
-                            <h3 className="font-bold text-sm text-slate-900 line-clamp-1">{p.banglaName || p.name}</h3>
-                            <p className="text-[11px] text-slate-400 mt-0.5">{p.name}</p>
-
-                            {/* 3-Tier Pricing Breakdown */}
-                            <div className="mt-3 p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5 text-xs">
-                              <div className="flex items-center justify-between">
-                                <span className="text-slate-500">{lang === 'bn' ? 'পাইকারি খরচ (আপনার রেট):' : 'Wholesale Cost:'}</span>
-                                <span className="font-black text-emerald-700 text-sm">৳{wholesaleCost}</span>
-                              </div>
-                              <div className="flex items-center justify-between text-[11px]">
-                                <span className="text-slate-500">{lang === 'bn' ? 'খুচরা শপ মূল্য:' : 'Retail Shop Price:'}</span>
-                                <span className="font-semibold text-slate-700">৳{p.shopPrice}</span>
-                              </div>
-                              <div className="flex items-center justify-between text-[11px]">
-                                <span className="text-slate-500">{lang === 'bn' ? 'সর্বোচ্চ বিক্রয় সীমা:' : 'Max Allowed Price:'}</span>
-                                <span className="font-semibold text-slate-600">৳{maxAllowed}</span>
-                              </div>
-                              <div className="pt-1.5 border-t border-slate-200 flex items-center justify-between font-bold text-emerald-600">
-                                <span>{lang === 'bn' ? 'প্রত্যাশিত লাভ:' : 'Est. Profit:'}</span>
-                                <span>৳{estimatedProfit}</span>
-                              </div>
+                          <div className="p-4 sm:p-5 pt-0 space-y-2">
+                            <div className="grid grid-cols-2 gap-2">
+                              <button
+                                type="button"
+                                onClick={() => openCalculator(p)}
+                                className="py-2.5 px-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer"
+                              >
+                                <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
+                                <span>{lang === 'bn' ? 'লাভ হিসাব' : 'Profit Calc'}</span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => prepareOrderFromProduct(p)}
+                                className="py-2.5 px-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black transition flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer"
+                              >
+                                <span>{lang === 'bn' ? 'অর্ডার প্লেস' : 'Place Order'}</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </button>
                             </div>
+
+                            {/* Copy Product Details for Social Media Posting */}
+                            <button
+                              type="button"
+                              onClick={() => handleCopyProductInfo(p)}
+                              className="w-full py-2 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 text-[11px] font-bold transition flex items-center justify-center gap-1.5 cursor-pointer"
+                            >
+                              {copiedProductId === p.id ? (
+                                <>
+                                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                  <span className="text-emerald-700">বিবরণী কপি হয়েছে!</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3.5 h-3.5 text-slate-400" />
+                                  <span>ফেসবুক/সোশ্যালে পোস্টের জন্য বিবরণী কপি</span>
+                                </>
+                              )}
+                            </button>
                           </div>
                         </div>
-
-                        <div className="p-4 pt-0 grid grid-cols-2 gap-2">
-                          <button
-                            onClick={() => openCalculator(p)}
-                            className="py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer"
-                          >
-                            <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
-                            <span>{lang === 'bn' ? 'লাভ হিসাব করুন' : 'Profit Calc'}</span>
-                          </button>
-                          <button
-                            onClick={() => prepareOrderFromProduct(p)}
-                            className="py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-md shadow-emerald-600/20 cursor-pointer"
-                          >
-                            <span>{lang === 'bn' ? 'অর্ডার করুন' : 'Place Order'}</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
             {/* TAB 2: NEW RESELLER ORDER BUILDER */}
             {activeTab === 'new-order' && (

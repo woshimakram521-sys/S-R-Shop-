@@ -205,22 +205,6 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   )}
                 </div>
 
-                {/* Reseller Info if viewing in reseller mode */}
-                {isReseller && product.resellerPrice && (
-                  <div className="mt-2.5 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950">
-                    <p className="font-bold flex items-center gap-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-amber-700 inline" />
-                      {lang === 'bn' ? 'রিসেলার স্পেশাল রেট:' : 'Reseller Wholesale Rate:'} 
-                      <span className="text-sm font-extrabold text-amber-900">৳{product.resellerPrice.toLocaleString()}</span>
-                    </p>
-                    <p className="text-amber-800 mt-1">
-                      {lang === 'bn' 
-                        ? `সাধারণ মূল্যে বিক্রি করলে আপনার লাভ হবে প্রতি পিসে ৳${(product.shopPrice - product.resellerPrice).toLocaleString()}!` 
-                        : `Selling at retail earns you ৳${(product.shopPrice - product.resellerPrice).toLocaleString()} profit per unit!`}
-                    </p>
-                  </div>
-                )}
-
                 {/* Variants Selection */}
                 {product.variants && product.variants.length > 0 && (
                   <div className="mt-4 space-y-3">

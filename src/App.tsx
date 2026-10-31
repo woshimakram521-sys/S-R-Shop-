@@ -610,7 +610,7 @@ export default function App() {
                     key={product.id}
                     product={product}
                     lang={lang}
-                    isReseller={currentUser?.role === 'reseller'}
+                    isReseller={false}
                     onSelect={(p) => handleSelectProduct(p)}
                     onAddToCart={(p, e) => {
                       e.stopPropagation();
@@ -667,7 +667,7 @@ export default function App() {
                       key={product.id}
                       product={product}
                       lang={lang}
-                      isReseller={currentUser?.role === 'reseller'}
+                      isReseller={false}
                       onSelect={(p) => handleSelectProduct(p)}
                       onAddToCart={(p, e) => {
                         e.stopPropagation();
@@ -1000,7 +1000,7 @@ export default function App() {
         product={selectedProduct}
         allProducts={products}
         lang={lang}
-        isReseller={currentUser?.role === 'reseller'}
+        isReseller={false}
         onClose={() => setSelectedProduct(null)}
         onAddToCart={(p, qty, vars) => handleAddToCart(p, qty, vars)}
         onDirectOrder={(p, qty, vars) => handleDirectOrder(p, qty, vars)}

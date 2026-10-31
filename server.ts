@@ -1312,11 +1312,19 @@ app.post('/api/admin/email-logs/:id/resend', requireAdmin, async (req: AuthReque
 // ==========================================
 async function startServer() {
   const isProduction = process.env.NODE_ENV === 'production';
+  const http = await import('http');
+  const server = http.createServer(app);
 
   if (!isProduction) {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
-      server: { middlewareMode: true, hmr: false },
+      server: {
+        middlewareMode: true,
+        hmr: {
+          server,
+          clientPort: 443,
+        },
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);
@@ -1328,7 +1336,7 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  server.listen(PORT, '0.0.0.0', () => {
     console.log(`Nova Shop Full-Stack Server running on port ${PORT}`);
   });
 }

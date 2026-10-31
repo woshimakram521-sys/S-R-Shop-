@@ -68,16 +68,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           )}
 
-          {/* Reseller Wholesale Badge if logged in as reseller */}
-          {isReseller && product.resellerPrice && (
-            <div className="absolute bottom-2 left-2 right-2 bg-amber-500/95 backdrop-blur-xs text-slate-950 px-2.5 py-1 rounded-lg text-xs font-bold flex items-center justify-between shadow-md">
-              <span className="flex items-center gap-1">
-                <TrendingUp className="w-3.5 h-3.5 text-slate-950" />
-                {lang === 'bn' ? 'রিসেলার রেট:' : 'Reseller Cost:'}
-              </span>
-              <span>৳{product.resellerPrice.toLocaleString()}</span>
-            </div>
-          )}
         </div>
 
         {/* Content Body */}
@@ -112,16 +102,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               </span>
             )}
           </div>
-
-          {/* Reseller Estimated Profit Highlight */}
-          {isReseller && resellerProfit > 0 && (
-            <p className="text-[11px] text-emerald-700 font-semibold mt-1 flex items-center gap-1">
-              <CheckCircle className="w-3 h-3 inline" />
-              {lang === 'bn' 
-                ? `প্রস্তাবিত লাভ: ৳${resellerProfit.toLocaleString()}` 
-                : `Est. Profit: ৳${resellerProfit.toLocaleString()}`}
-            </p>
-          )}
         </div>
       </div>
 
