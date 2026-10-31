@@ -58,6 +58,7 @@ import type {
   Category,
 } from '../types.js';
 import { api, setAuthToken } from '../api.js';
+import { BrandLogo } from './BrandLogo.js';
 
 interface AdminDashboardProps {
   isOpen?: boolean;
@@ -859,17 +860,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-600 to-red-600 text-white flex items-center justify-center font-black text-lg shadow-md shadow-rose-600/30">
-              {((settings?.shopName || 'ZX').slice(0, 2)).toUpperCase()}
-            </div>
-            <div>
-              <h1 className="text-base sm:text-lg font-black text-slate-900 tracking-tight leading-none">
-                {settings?.banglaShopName || 'ZX Shop'}
-              </h1>
-              <p className="text-[10px] sm:text-xs font-semibold text-rose-600 mt-0.5">
-                {settings?.banglaTagline || 'আপনার পছন্দের প্রিমিয়াম অনলাইন শপ'}
-              </p>
-            </div>
+            <BrandLogo
+              size="sm"
+              variant="full"
+              shopName={settings?.shopName || 'Nova Shop'}
+              banglaShopName={settings?.banglaShopName || 'নোভা শপ'}
+              tagline={settings?.banglaTagline || 'অ্যাডমিন ড্যাশবোর্ড'}
+            />
           </div>
 
           {/* Search bar inside header (Screenshot 1) */}
@@ -1088,12 +1085,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <div className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-sm mb-4">
               <div className="flex items-center justify-between gap-3 mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-600 to-red-600 text-white flex items-center justify-center font-black text-xl shadow-md shadow-rose-600/30">
-                    {((settings?.shopName || 'ZX').slice(0, 2)).toUpperCase()}
-                  </div>
+                  <BrandLogo size="lg" variant="badge" />
                   <div>
                     <h2 className="text-base sm:text-lg font-black text-slate-900 tracking-tight leading-none">
-                      {settings?.banglaShopName || 'ZX Shop'} অ্যাডমিন কন্ট্রোল
+                      {settings?.banglaShopName || 'নোভা শপ'} অ্যাডমিন কন্ট্রোল
                     </h2>
                     <span className="text-xs font-bold text-emerald-600 mt-1 block">
                       সক্রিয় সেশন (অ্যাডমিনিস্ট্রেটর)

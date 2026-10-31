@@ -38,6 +38,7 @@ import type {
   Order 
 } from './types.js';
 import { api, getAuthToken, setAuthToken } from './api.js';
+import { BrandLogo } from './components/BrandLogo.js';
 import { Header } from './components/Header.js';
 import { ProductCard } from './components/ProductCard.js';
 import { ProductDetailPage } from './components/ProductDetailPage.js';
@@ -143,21 +144,23 @@ export default function App() {
 
   const loadStoreData = async () => {
     try {
-      const [sets, cats, bans, zones, prods] = await Promise.all([
+      const [setsRes, catsRes, bansRes, zonesRes, prodsRes] = await Promise.allSettled([
         api.getSettings(),
         api.getCategories(),
         api.getBanners(),
         api.getDeliveryZones(),
         api.getProducts(),
       ]);
-      setSettings(sets);
-      setCategories(cats);
-      setBanners(bans);
-      setDeliveryZones(zones);
-      setProducts(prods);
-      if (zones.length > 0) {
-        setSelectedZoneId(zones[0].id);
+      if (setsRes.status === 'fulfilled') setSettings(setsRes.value);
+      if (catsRes.status === 'fulfilled') setCategories(catsRes.value);
+      if (bansRes.status === 'fulfilled') setBanners(bansRes.value);
+      if (zonesRes.status === 'fulfilled') {
+        setDeliveryZones(zonesRes.value);
+        if (zonesRes.value.length > 0) {
+          setSelectedZoneId(zonesRes.value[0].id);
+        }
       }
+      if (prodsRes.status === 'fulfilled') setProducts(prodsRes.value);
     } catch (err) {
       console.error('Error loading store data:', err);
     }
@@ -823,10 +826,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand Col */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-teal-600 flex items-center justify-center font-black text-white text-base">
-                N
-              </div>
+            <div className="flex items-center gap-2.5">
+              <BrandLogo size="sm" variant="badge" />
               <span className="text-base font-black text-white tracking-tight">
                 {settings?.banglaShopName || 'নোভা শপ'}
               </span>

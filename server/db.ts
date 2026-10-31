@@ -613,6 +613,7 @@ function getInitialData(): DatabaseSchema {
 class Database {
   private data: DatabaseSchema;
   private isSaving = false;
+  private pendingSave = false;
 
   constructor() {
     this.data = this.load();
@@ -684,28 +685,69 @@ class Database {
       console.error('Error reading database file, creating fresh dataset:', err);
     }
 
+    // Try fallback emergency file if main file is missing or corrupted
+    try {
+      const fallbackPath = path.join(process.env.TEMP || '/tmp', 'novashop-db.json');
+      if (fs.existsSync(fallbackPath)) {
+        const raw = fs.readFileSync(fallbackPath, 'utf8');
+        const parsed = JSON.parse(raw);
+        if (parsed.settings && parsed.products) {
+          console.log(`Database recovered from fallback: ${fallbackPath}`);
+          return parsed;
+        }
+      }
+    } catch {}
+
     const fresh = getInitialData();
     this.saveDirect(fresh);
     return fresh;
   }
 
   private saveDirect(data: DatabaseSchema) {
+    const jsonStr = JSON.stringify(data, null, 2);
     try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+      }
       const tempPath = `${DB_FILE}.tmp.${Date.now()}`;
-      fs.writeFileSync(tempPath, JSON.stringify(data, null, 2), 'utf8');
-      fs.renameSync(tempPath, DB_FILE);
+      fs.writeFileSync(tempPath, jsonStr, 'utf8');
+      try {
+        fs.renameSync(tempPath, DB_FILE);
+      } catch (renameErr) {
+        // Fallback for Windows or cross-device mounts where renameSync fails:
+        fs.copyFileSync(tempPath, DB_FILE);
+        try { fs.unlinkSync(tempPath); } catch {}
+      }
     } catch (err) {
-      console.error('Error saving database atomically:', err);
+      console.warn('Atomic save failed, falling back to direct write:', err);
+      try {
+        fs.writeFileSync(DB_FILE, jsonStr, 'utf8');
+      } catch (directErr) {
+        console.error('Fatal error saving database directly to DB_FILE:', directErr);
+        // Emergency secondary fallback for serverless/read-only container environments
+        try {
+          const fallbackPath = path.join(process.env.TEMP || '/tmp', 'novashop-db.json');
+          fs.writeFileSync(fallbackPath, jsonStr, 'utf8');
+          console.log(`Database emergency saved to ${fallbackPath}`);
+        } catch {}
+      }
     }
   }
 
   public save() {
-    if (this.isSaving) return;
+    if (this.isSaving) {
+      this.pendingSave = true;
+      return;
+    }
     this.isSaving = true;
     try {
       this.saveDirect(this.data);
     } finally {
       this.isSaving = false;
+      if (this.pendingSave) {
+        this.pendingSave = false;
+        this.save();
+      }
     }
   }
 

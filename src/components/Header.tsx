@@ -13,6 +13,7 @@ import {
   Camera
 } from 'lucide-react';
 import type { Category, StoreSettings, User } from '../types.js';
+import { BrandLogo } from './BrandLogo.js';
 
 interface HeaderProps {
   lang: 'bn' | 'en';
@@ -105,17 +106,13 @@ export const Header: React.FC<HeaderProps> = ({
               }}
               className="flex items-center gap-2.5 text-left group cursor-pointer"
             >
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-rose-600 to-red-600 flex items-center justify-center shadow-md shadow-rose-600/30 group-hover:scale-105 transition-transform text-white font-black text-lg sm:text-xl tracking-wider">
-                {((settings?.shopName || 'ZX').slice(0, 2)).toUpperCase()}
-              </div>
-              <div>
-                <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 font-sans block leading-none">
-                  {lang === 'bn' ? (settings?.banglaShopName || 'ZX Shop') : (settings?.shopName || 'ZX Shop')}
-                </span>
-                <span className="text-[10px] sm:text-xs text-rose-600 font-semibold tracking-wider uppercase block mt-1">
-                  {lang === 'bn' ? 'SHOPPING & RESELLER BD' : 'SHOPPING & RESELLER BD'}
-                </span>
-              </div>
+              <BrandLogo
+                size="md"
+                variant="full"
+                shopName={settings?.shopName || 'Nova Shop'}
+                banglaShopName={lang === 'bn' ? (settings?.banglaShopName || 'নোভা শপ') : (settings?.shopName || 'Nova Shop')}
+                tagline={settings?.tagline || 'SHOPPING & RESELLER BD'}
+              />
             </button>
           </div>
 
