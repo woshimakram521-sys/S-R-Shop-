@@ -68,8 +68,8 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 
       {/* Stylized Luxury 'S' */}
       <span
-        className={`relative z-10 ${currentSize.text} tracking-tight font-serif italic text-white drop-shadow-[0_2px_4px_rgba(76,5,25,0.7)]`}
-        style={{ fontFamily: '"Plus Jakarta Sans", Georgia, serif' }}
+        className={`relative z-10 ${currentSize.text} font-black text-white tracking-tight drop-shadow-[0_2px_4px_rgba(76,5,25,0.8)]`}
+        style={{ fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif' }}
       >
         S
       </span>

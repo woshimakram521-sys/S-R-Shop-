@@ -30,6 +30,21 @@
         }, true);
       })();
     </script>
+    <script>
+      window.__vite_plugin_react_preamble_installed__ = true;
+      window.$RefreshReg$ = window.$RefreshReg$ || function() {};
+      window.$RefreshSig$ = window.$RefreshSig$ || function() { return function(type) { return type; }; };
+    </script>
+    <script type="module">
+      try {
+        import('/@react-refresh').then(function(RefreshRuntime) {
+          if (RefreshRuntime && RefreshRuntime.default) RefreshRuntime = RefreshRuntime.default;
+          if (RefreshRuntime && typeof RefreshRuntime.injectIntoGlobalHook === 'function') {
+            RefreshRuntime.injectIntoGlobalHook(window);
+          }
+        }).catch(function() {});
+      } catch (e) {}
+    </script>
     <title>Nova Shop | প্রিমিয়াম অনলাইন শপ ও রিসেলার প্ল্যাটফর্ম</title>
     <meta name="description" content="Nova Shop - বাংলাদেশের বিশ্বস্ত ও আধুনিক অনলাইন কেনাকাটা এবং রিসেলার প্ল্যাটফর্ম। ক্যাশ অন ডেলিভারি, বিকাশ ও নগদ পেমেন্ট সুবিধা।" />
     <meta property="og:title" content="Nova Shop - Bangladeshi E-Commerce & Reseller Platform" />
